@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+#folders and files
+.env
+.venv/
+pyvenv.cfg
+chromium-win64.zip
+
 # Distribution / packaging
 .Python
 build/

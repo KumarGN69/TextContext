@@ -1,0 +1,2 @@
+crawl4AI ~= 0.4.247
+asyncio ~= 3.4.3
