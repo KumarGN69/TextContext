@@ -1,2 +1,7 @@
 crawl4AI ~= 0.4.247
 asyncio ~= 3.4.3
+sentence-transformers ~=3.4.1
+langchain_ollama ~=0.2.3
+fastapi[standard]~=0.115.8
+typing ~=3.7.4.3
+
