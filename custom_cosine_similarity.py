@@ -13,7 +13,7 @@ content1 = client.generate(
 logger.info(content1.response)
 content2 = client.generate(
     model="llama3.2",
-    prompt="Who is the current vice president of United states of America"
+    prompt="Who is the current president of United states of America"
 )
 logger.info(content2.response)
 transformer_model = SentenceTransformer("deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B")
