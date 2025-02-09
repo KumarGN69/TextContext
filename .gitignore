@@ -12,6 +12,8 @@ __pycache__/
 pyvenv.cfg
 chromium-win64.zip
 deepseek-R1-Zero/
+deepseekZero/
+phi-2/
 
 # Distribution / packaging
 .Python
