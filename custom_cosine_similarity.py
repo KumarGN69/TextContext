@@ -16,9 +16,9 @@ content2 = client.generate(
     prompt="Who is the current vice president of United states of America"
 )
 logger.info(content2.response)
-transformer_model = SentenceTransformer("microsoft/phi-2")
-transformer_model.save("./phi-2")
-transformer_local_model = SentenceTransformer("./phi-2")
+transformer_model = SentenceTransformer("deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B")
+transformer_model.save("./deepseek-R1-Zero")
+transformer_local_model = SentenceTransformer("./deepseek-R1-Zero")
 
 
 

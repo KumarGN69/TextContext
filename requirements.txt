@@ -4,4 +4,8 @@ sentence-transformers ~=3.4.1
 langchain_ollama ~=0.2.3
 fastapi[standard]~=0.115.8
 typing ~=3.7.4.3
+python-dotenv~=1.0.1
+langchain_chroma ~=0.2.1
+langchain_text_splitters ~=0.3.6
+loguru~=0.7.3
 
