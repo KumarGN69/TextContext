@@ -24,7 +24,7 @@ except Exception as e:
 # search_query = "How would you rate the Google Pixel ecosystem experience?"
 search_query = "Google Pixel Buds user experience?"
 subreddits = ["GooglePixel", "Android"]  # Targeted subreddits
-num_posts = 1  # Number of posts to fetch
+num_posts = 10  # Number of posts to fetch
 
 def fetch_reviews():
     """Fetch user reviews (comments) from Reddit posts related to the search query."""
@@ -62,14 +62,20 @@ def fetch_reviews():
 # Extract reviews
 reviews = fetch_reviews()
 reviews_json= json.loads(json.dumps(reviews))
-print(len(reviews_json))
+nuetral = positive = negative = 0
 for review in reviews_json:
     sentiment = TextBlob(review['comment']).sentiment
-    if sentiment.subjectivity <=0.4 and sentiment.polarity >=0.7: 
+    if sentiment.subjectivity <=0.5 and sentiment.polarity > 0.05: 
         # print(f"title: {review['post_title']},comment: {review['comment']}")
-        print(f"Sentiment is fact based and positive: {sentiment.polarity}")
-    else:
-        print(f"sentiment is subjective")
+        # print(f"Sentiment is fact based and positive: {sentiment.polarity}")
+        positive += 1
+    elif sentiment.subjectivity <= 0.5 and sentiment.polarity < -0.05:
+        # print(f"Sentiment is fact based and negative: {sentiment.polarity}")
+        negative += 1
+    elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
+        # print(f"sentiment is nuetral")
+        nuetral += 1
+print(f"Positive: {positive}, Negative:{negative}, Nuetral: {nuetral}")        
 # Save to CSV
 if reviews:
     df = pd.DataFrame(reviews)
