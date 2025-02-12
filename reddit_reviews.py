@@ -75,7 +75,8 @@ for review in reviews_json:
     elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
         # print(f"sentiment is nuetral")
         nuetral += 1
-print(f"Positive: {positive}, Negative:{negative}, Nuetral: {nuetral}")        
+print(f"Positive: {positive}, Negative:{negative}, Nuetral: {nuetral}")   
+     
 # Save to CSV
 if reviews:
     df = pd.DataFrame(reviews)
