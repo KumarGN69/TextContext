@@ -44,6 +44,7 @@ def fetch_reviews():
                 print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
 
                 post.comments.replace_more(limit=2)  # Avoid excessive API calls
+                
                 for comment in post.comments.list():
                     if comment.body:
                         all_comments.append({
@@ -51,7 +52,7 @@ def fetch_reviews():
                             "post_title": post.title,
                             "post_url": post.url,
                             "comment": comment.body,
-                            "upvotes": comment.score
+                            "upvotes": comment.score,
                         })
                         # print(comment.body)
                 

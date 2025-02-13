@@ -31,14 +31,15 @@ class RedditHandler:
         
         try:
             for subreddit in self.subreddits:
-                # print(f"\n🔍 Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
+                print(f"\n🔍 Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
                 reddit = self.getRedditInstance()
                 subreddit_instance = reddit.subreddit(subreddit)
-                posts = subreddit_instance.search(self.client_searchquery, limit=int(os.getenv('NUM_POSTS')))
+                posts = subreddit_instance.search(self.client_searchquery,params= {"t":'month'},limit=int(os.getenv('NUM_POSTS')))
                 for post in posts:
-                    # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
+                    print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
 
                     post.comments.replace_more(limit=2)  # Avoid excessive API calls
+                    
                     for comment in post.comments.list():
                         if comment.body:
                             all_comments.append({
