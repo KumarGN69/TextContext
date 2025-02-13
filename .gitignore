@@ -7,7 +7,6 @@ __pycache__/
 *.so
 
 #folders and files
-.env
 .venv/
 pyvenv.cfg
 chromium-win64.zip

@@ -12,5 +12,5 @@ if __name__ == "__main__":
     sentiments.assessSentiments(reviews=reviews)
 
     print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.nuetral_sentiments}")
-    for comment in sentiments.negative_comments:
-        print(comment)
+    # for comment in sentiments.negative_comments:
+    #     print(comment)

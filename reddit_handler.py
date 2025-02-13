@@ -34,7 +34,10 @@ class RedditHandler:
                 print(f"\n🔍 Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
                 reddit = self.getRedditInstance()
                 subreddit_instance = reddit.subreddit(subreddit)
-                posts = subreddit_instance.search(self.client_searchquery,params= {"t":'month'},limit=int(os.getenv('NUM_POSTS')))
+                posts = subreddit_instance.search(
+                    query=self.client_searchquery,
+                    time_filter=os.getenv('TIME_FILTER'),
+                    limit=int(os.getenv('NUM_POSTS')))
                 for post in posts:
                     print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
 
