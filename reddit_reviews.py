@@ -2,18 +2,21 @@ import praw
 import pandas as pd
 import time, json
 from textblob import TextBlob
+import dotenv, os
+
+dotenv.load_dotenv()
 
 #  Reddit API credentials - Replace these with your credentials
-REDDIT_CLIENT_ID = "IR5d96aUn_Jowv2GaR4HQQ"
-REDDIT_CLIENT_SECRET = "KaW7TY_ozL0kTIwzVjSzF2O2B1yQ-Q"
-REDDIT_USER_AGENT = "Review scrapper 1.0"
+# REDDIT_CLIENT_ID = "IR5d96aUn_Jowv2GaR4HQQ"
+# REDDIT_CLIENT_SECRET = "KaW7TY_ozL0kTIwzVjSzF2O2B1yQ-Q"
+# REDDIT_USER_AGENT = "Review scrapper 1.0"
 
 # Initialize Reddit API using PRAW
 try:
     reddit = praw.Reddit(
-        client_id=REDDIT_CLIENT_ID,
-        client_secret=REDDIT_CLIENT_SECRET,
-        user_agent=REDDIT_USER_AGENT
+        client_id=os.getenv('REDDIT_CLIENT_ID'),
+        client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
+        user_agent=os.getenv('REDDIT_USER_AGENT')
     )
     print("✅ Successfully authenticated with Reddit API")
 except Exception as e:
@@ -35,7 +38,7 @@ def fetch_reviews():
             print(f"\n🔍 Searching in r/{subreddit} for posts related to: '{search_query}'")
             
             subreddit_instance = reddit.subreddit(subreddit)
-            posts = subreddit_instance.search(search_query, limit=num_posts)
+            posts = subreddit_instance.search(search_query, limit=int(os.getenv('NUM_POSTS')))
 
             for post in posts:
                 print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
