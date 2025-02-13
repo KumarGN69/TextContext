@@ -10,7 +10,7 @@ class RedditHandler:
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
         self.client_searchquery = os.getenv('SEARCH_QUERY')
-        self.subreddits = ["GooglePixel", "Android"]
+        self.subreddits = ["GooglePixel"]
     
     def getRedditInstance(self):
         try:
