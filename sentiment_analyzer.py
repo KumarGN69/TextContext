@@ -12,13 +12,13 @@ class SentimentAnalyzer():
         self.positive_comments = []
     def assessSentiments(self, reviews:list):
         for review in reviews:
-            sentiment = TextBlob(review['comment']).sentiment
-            if sentiment.subjectivity <=0.5 and sentiment.polarity > 0.05: 
+            sentiment = TextBlob(review['self_text']).sentiment
+            if sentiment.subjectivity <=0.5 and sentiment.polarity > 0.25: 
                 self.positive_sentiments += 1
-                self.positive_comments.append(review['comment'])
-            elif sentiment.subjectivity <= 0.5 and sentiment.polarity < -0.05:
+                self.positive_comments.append(review['self_text'])
+            elif sentiment.subjectivity <= 0.5 and sentiment.polarity < 0.05:
                 self.negative_sentiments += 1
-                self.negative_comments.append(review['comment'])
-            elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
+                self.negative_comments.append(review['self_text'])
+            elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= 0.05 and sentiment.polarity <= 0.25):
                 self.nuetral_sentiments += 1
-                self.nuetral_comments.append(review['comment'])
+                self.nuetral_comments.append(review['self_text'])

@@ -15,6 +15,7 @@ from sumy.summarizers.lsa import LsaSummarizer
 
 if __name__ == "__main__":
     reddit = RedditHandler()
+    # print(reddit.fetch_reviews())
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
 
     sentiments = SentimentAnalyzer()
@@ -33,13 +34,6 @@ if __name__ == "__main__":
 #     stop_words = set(stopwords.words("english"))
 #     return [word for word in tokens if word.isalnum() and word not in stop_words]
 
-# # Sample text corpus
-# # corpus = [
-# #     "Google Pixel phones have excellent AI-powered cameras.",
-# #     "Pixel Buds provide great sound quality and noise cancellation.",
-# #     "Pixel Watch integrates well with the Google ecosystem.",
-# #     "The Android experience on Pixel devices is very smooth."
-# # ]
 # corpus = sentiments.negative_comments
 # # Tokenize and preprocess text
 # processed_corpus = [preprocess_text(doc) for doc in corpus]
@@ -55,22 +49,19 @@ if __name__ == "__main__":
 # for idx, topic in lda_model.print_topics(-1):
 #     print(f"🔹 Topic {idx+1}: {topic}")
 
-# Input text
-# text = """The Google Pixel 8 Pro has an amazing AI-powered camera that captures stunning photos.
-#           The battery life is decent, lasting a full day under moderate usage.
-#           However, some users have reported issues with the fingerprint sensor.
-#           Overall, the Pixel 8 Pro provides a great Android experience with regular updates."""
-
 comments = sentiments.nuetral_comments
+
 for comment in comments:
+    # print(comment)
     # Parse and tokenize
     parser = PlaintextParser.from_string(comment, Tokenizer("english"))
 
     # Use LSA (Latent Semantic Analysis) Summarizer
     summarizer = LsaSummarizer()
-    summary = summarizer(parser.document, 2)  # Extract 2 sentences
+    summary = summarizer(parser.document, 1)  # Extract 2 sentences
 
     # Print summary
     print("🔹 Summary:")
     for sentence in summary:
+        # pass
         print(sentence)
