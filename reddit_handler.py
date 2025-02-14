@@ -44,7 +44,8 @@ class RedditHandler:
                     # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
                     post.comments.replace_more(limit=2)  # Avoid excessive API calls
                     all_posts.append({
-                        "self_text":post.selftext
+                        "self_text":post.selftext,
+                        "post_title":post.title
                     })
                     for comment in post.comments.list():
                         if comment.body:

@@ -17,7 +17,7 @@ if __name__ == "__main__":
     reddit = RedditHandler()
     # print(reddit.fetch_reviews())
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
-
+    # print(reviews)
     sentiments = SentimentAnalyzer()
     sentiments.assessSentiments(reviews=reviews)
 
