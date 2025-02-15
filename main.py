@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # analyze sentiments of the retrieved posts 
     sentiments = SentimentAnalyzer()
     sentiments.assessSentiments(reviews=reviews)
-    
+    print(f"In Main:{sentiments.negative_sentiments}")
     #print the sentiment analysis summary
     print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.neutral_sentiments}")
     
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         file_name = "reddit_positive_reviews.csv"
         df.to_csv(file_name, index=False)
         df.to_json("reddit_positive_reviews.json")
-        print(f"\n Data saved successfully to '{file_name}'")
+        # print(f"\n Data saved successfully to '{file_name}'")
     else:
         print("No reviews found!")
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         file_name = "reddit_negative_reviews.csv"
         df.to_csv(file_name, index=False)
         df.to_json("reddit_negative_reviews.json")
-        print(f"\n Data saved successfully to '{file_name}'")
+        # print(f"\n Data saved successfully to '{file_name}'")
     else:
         print("No reviews found!")
     
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         file_name = "reddit_neutral_reviews.csv"
         df.to_csv(file_name, index=False)
         df.to_json("reddit_neutral_reviews.json")
-        print(f"\n Data saved successfully to '{file_name}'")
+        # print(f"\n Data saved successfully to '{file_name}'")
     else:
         print(" No reviews found!")
     

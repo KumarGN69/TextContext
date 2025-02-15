@@ -54,7 +54,7 @@ class ReviewClassifier:
             json_file_name = "reddit_positive_review_classification.json"
             df.to_csv(csv_file_name, index=False)
             df.to_json(json_file_name, index=False)
-            print(f"\n Data saved files successfully '")
+            # print(f"\n Data saved files successfully '")
         else:
             print(" No reviews found!")
 
@@ -104,7 +104,7 @@ class ReviewClassifier:
             json_file_name = "reddit_negative_review_classification.json"
             df.to_csv(csv_file_name, index=False)
             df.to_json(json_file_name, index=False)
-            print(f"\n Data saved files successfully '")
+            # print(f"\n Data saved files successfully '")
         else:
             print(" No reviews found!")
 
@@ -154,7 +154,7 @@ class ReviewClassifier:
             json_file_name = "reddit_neutral_review_classification.json"
             df.to_csv(csv_file_name, index=False)
             df.to_json(json_file_name, index=False)
-            print(f"\n Data saved files successfully '")
+            # print(f"\n Data saved files successfully '")
         else:
             print(" No reviews found!")
 
