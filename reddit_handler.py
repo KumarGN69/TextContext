@@ -27,7 +27,6 @@ class RedditHandler:
    
     def fetch_reviews(self):
         """Fetch user reviews (comments) from Reddit posts related to the search query."""
-        all_comments = []
         all_posts = []
         try:
             for subreddit in self.subreddits:
@@ -47,23 +46,12 @@ class RedditHandler:
                         "post_title": post.title,
                         "self_text":post.selftext,
                     })
-                    # for comment in post.comments.list():
-                    #     if comment.body:
-                    #         all_comments.append({
-                    #             "subreddit": subreddit,
-                    #             "post_title": post.title,
-                    #             "post_url": post.url,
-                    #             "comment": comment.body,
-                    #             "upvotes": comment.score,
-                    #             "self_text":post.selftext
-                    #         })
-                    
                     time.sleep(1)  # Pause to prevent API rate limits
 
         except Exception as e:
             print(f"Error fetching reviews: {e}")
 
-        # return all_comments
+        # return all_posts
         return all_posts
 
     
