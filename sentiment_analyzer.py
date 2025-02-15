@@ -30,10 +30,10 @@ class SentimentAnalyzer():
                     "sentiment": "Negative",
                     "comment": comment
                 })
-            elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
+            elif sentiment.subjectivity <= 0.5 and (sentiment.polarity > -0.05 and sentiment.polarity < 0.05):
                 self.neutral_sentiments += 1
                 # self.neutral_comments.append(f"{review['post_title']}+{review['self_text']}")
-                self.negative_comments.append({
+                self.neutral_comments.append({
                     "sentiment": "Neutral",
                     "comment": comment
                 })

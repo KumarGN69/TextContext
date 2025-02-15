@@ -4,12 +4,12 @@ class RedditHandler:
     """
     """
 
-    def __init__(self):
+    def __init__(self,query):
         dotenv.load_dotenv()
         self.client_id = os.getenv('REDDIT_CLIENT_ID')
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
-        self.client_searchquery = os.getenv('SEARCH_QUERY')
+        self.client_searchquery = query
         self.subreddits = ["GooglePixel"]
     
     def getRedditInstance(self):
@@ -19,10 +19,10 @@ class RedditHandler:
                 client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
                 user_agent=os.getenv('REDDIT_USER_AGENT')
             )
-            print("✅ Successfully authenticated with Reddit API")
+            print("Successfully authenticated with Reddit API")
             return reddit
         except Exception as e:
-            print(f"❌ Error authenticating with Reddit: {e}")
+            print(f"Error authenticating with Reddit: {e}")
             exit()
    
     def fetch_reviews(self):
@@ -31,7 +31,7 @@ class RedditHandler:
         all_posts = []
         try:
             for subreddit in self.subreddits:
-                print(f"\n🔍 Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
+                print(f"\n Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
                 reddit = self.getRedditInstance()
                 subreddit_instance = reddit.subreddit(subreddit)
                 posts = subreddit_instance.search(
@@ -47,21 +47,21 @@ class RedditHandler:
                         "post_title": post.title,
                         "self_text":post.selftext,
                     })
-                    for comment in post.comments.list():
-                        if comment.body:
-                            all_comments.append({
-                                "subreddit": subreddit,
-                                "post_title": post.title,
-                                "post_url": post.url,
-                                "comment": comment.body,
-                                "upvotes": comment.score,
-                                "self_text":post.selftext
-                            })
+                    # for comment in post.comments.list():
+                    #     if comment.body:
+                    #         all_comments.append({
+                    #             "subreddit": subreddit,
+                    #             "post_title": post.title,
+                    #             "post_url": post.url,
+                    #             "comment": comment.body,
+                    #             "upvotes": comment.score,
+                    #             "self_text":post.selftext
+                    #         })
                     
                     time.sleep(1)  # Pause to prevent API rate limits
 
         except Exception as e:
-            print(f"❌ Error fetching reviews: {e}")
+            print(f"Error fetching reviews: {e}")
 
         # return all_comments
         return all_posts
