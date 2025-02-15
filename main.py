@@ -21,10 +21,10 @@ if __name__ == "__main__":
     # print(reviews)
     sentiments = SentimentAnalyzer()
     sentiments.assessSentiments(reviews=reviews)
-    print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.nuetral_sentiments}")
-    for sentiment in sentiments.negative_comments:
-        print(f"neutral:{sentiment}")
-    # print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.nuetral_sentiments}")
+    print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.neutral_sentiments}")
+    # for sentiment in sentiments.positive_comments:
+    #     print(f"neutral:{sentiment}")
+    # print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.neutral_sentiments}")
     # for comment in sentiments.negative_comments:
     #     print(comment)
 
@@ -68,12 +68,12 @@ if __name__ == "__main__":
     #     for sentence in summary:
     #         # pass
     #         print(sentence)
-
-    if sentiments.neutral_comments:
-        df = pd.DataFrame(sentiments.neutral_comments)
-        file_name = "reddit_pixel_ecosystem_reviews.csv"
+    # reviewssentiment = [f"{review['post_title']}.{review['self_text']}" for review in reviews]
+    if sentiments.positive_comments:
+        df = pd.DataFrame(sentiments.positive_comments)
+        file_name = "reddit_pixel_reviews.csv"
         df.to_csv(file_name, index=False)
-        df.to_json("reddit_pixel_ecosystem_reviews.json")
+        df.to_json("reddit_pixel_reviews.json")
         print(f"\n✅ Data saved successfully to '{file_name}'")
     else:
         print("⚠️ No reviews found!")
