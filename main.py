@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # analyze sentiments of the retrieved posts 
     sentiments = SentimentAnalyzer()
     sentiments.assessSentiments(reviews=reviews)
-    print(f"In Main:{sentiments.negative_sentiments}")
+    # print(f"In Main:{sentiments.negative_sentiments}")
     #print the sentiment analysis summary
     print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.neutral_sentiments}")
     
@@ -63,11 +63,19 @@ if __name__ == "__main__":
     classifier.classifyPositiveReviews()
     classifier.classifyNegativeReviews()
     classifier.classifyNeutralReviews()
-
-    df= pd.read_json("./reddit_positive_review_classification.json")
-    print(df)
-    df= pd.read_json("./reddit_negative_review_classification.json")
-    print(df)
-    df= pd.read_json("./reddit_neutral_review_classification.json")
-    print(df)
+    try:
+        df= pd.read_json("./reddit_positive_review_classification.json")
+        print(df)
+    except Exception as e:
+        print(f"Error fetching positive reviews: {e}")
+    try:
+        df= pd.read_json("./reddit_negative_review_classification.json")
+        print(df)
+    except Exception as e:
+        print(f"Error fetching negative reviews: {e}")
+    try:
+        df= pd.read_json("./reddit_neutral_review_classification.json")
+        print(df)
+    except Exception as e:
+        print(f"Error fetching neutral reviews: {e}")
 
