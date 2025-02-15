@@ -8,7 +8,8 @@ class ReviewClassifier:
         self.model = LLMModel()
         self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-
+        self.classifiers = (f"User Experience, Service, Support, Others, Technical, Audio Issues, Video Issues, "
+                            f"Voice Quality, Bluetooth, WiFi, Call drop ")
     def classifyPositiveReviews(self):
         try:
             df= pd.read_json("./reddit_positive_reviews.json")
@@ -17,13 +18,12 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the entire {comment} into one of the following dominant categories: "
-                        f"Usability, Service, Support, Others. "
-                        f"Provide only the category name."
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
+                           f"Provide only the category name."
                 )
                 # print(classifier.response)
                 sentiment = "Positive"
-                if "Usability" in classifier.response:
+                if "User Experience" in classifier.response:
                     comment_classification.append({
                         "sentiment":sentiment,
                         "classification": "Usability",
@@ -39,6 +39,12 @@ class ReviewClassifier:
                     comment_classification.append({
                         "sentiment":sentiment,
                         "classification": "Support",
+                        "user_review":comment,
+                    })
+                elif "Technical" in classifier.response:
+                    comment_classification.append({
+                        "sentiment":sentiment,
+                        "classification": "Technical",
                         "user_review":comment,
                     })
                 else:
@@ -66,12 +72,11 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the entire {comment} into one of the following dominant categories: "
-                           f"Usability, Service, Support, Others. "
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
                            f"Provide only the category name."
                 )
                 sentiment = "Negative"
-                if "Usability" in classifier.response:
+                if "User Experience" in classifier.response:
                     comment_classification.append({
                         "sentiment": sentiment,
                         "classification": "Usability",
@@ -88,6 +93,12 @@ class ReviewClassifier:
                         "sentiment": sentiment,
                         "classification": "Support",
                         "user_review": comment,
+                    })
+                elif "Technical" in classifier.response:
+                    comment_classification.append({
+                        "sentiment":sentiment,
+                        "classification": "Technical",
+                        "user_review":comment,
                     })
                 else:
                     comment_classification.append({
@@ -114,13 +125,12 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the entire {comment} into one of the following dominant categories: "
-                           f"Usability, Service, Support, Others. "
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
                            f"Provide only the category name."
                 )
                 # print(classifier.response)
                 sentiment = "Neutral"
-                if "Usability" in classifier.response:
+                if "User Experience" in classifier.response:
                     comment_classification.append({
                         "sentiment": sentiment,
                         "classification": "Usability",
@@ -137,6 +147,12 @@ class ReviewClassifier:
                         "sentiment": sentiment,
                         "classification": "Support",
                         "user_review": comment,
+                    })
+                elif "Technical" in classifier.response:
+                    comment_classification.append({
+                        "sentiment":sentiment,
+                        "classification": "Technical",
+                        "user_review":comment,
                     })
                 else:
                     comment_classification.append({

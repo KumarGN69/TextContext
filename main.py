@@ -16,7 +16,7 @@ if __name__ == "__main__":
     sentiments.assessSentiments(reviews=reviews)
 
     # print the sentiment analysis summary
-    print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Nuetral: {sentiments.neutral_sentiments}")
+    print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Neutral: {sentiments.neutral_sentiments}")
 
 
     # create json files for positive reviews with classification
