@@ -13,12 +13,13 @@ if __name__ == "__main__":
 
     # analyze sentiments of the retrieved posts 
     sentiments = SentimentAnalyzer()
+    print(f"Assessment of extracted sentiments in progress")
     sentiments.assessSentiments(reviews=reviews)
-
+    print(f"Sentiment assessment summary: ")
     # print the sentiment analysis summary
     print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Neutral: {sentiments.neutral_sentiments}")
 
-
+    print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
     classifier = ReviewClassifier()
     if sentiments.positive_sentiments:

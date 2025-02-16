@@ -18,6 +18,7 @@ class ReviewClassifier:
             df= pd.read_json("./reddit_positive_reviews.json")
             comment_list = [df['user_review'][record] for record in range(0,df['user_review'].size)]
             comment_classification =[]
+            print(f"Classification of positive reviews in progress")
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
@@ -31,6 +32,7 @@ class ReviewClassifier:
                         "user_review": comment
                     }
                 })
+            print(f"Classification of positive reviews complete ")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_positive_review_classification.json"
@@ -49,6 +51,7 @@ class ReviewClassifier:
             df = pd.read_json("./reddit_negative_reviews.json")
             comment_list = [df['user_review'][record] for record in range(0, df['user_review'].size)]
             comment_classification = []
+            print(f"Classification of negative reviews in progress ")
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
@@ -62,7 +65,7 @@ class ReviewClassifier:
                         "user_review": comment
                     }
                 })
-
+            print(f"Classification of negative reviews complete ")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_negative_review_classification.json"
@@ -81,6 +84,7 @@ class ReviewClassifier:
             df = pd.read_json("./reddit_neutral_reviews.json")
             comment_list = [df['user_review'][record] for record in range(0, df['user_review'].size)]
             comment_classification = []
+            print(f"Classification of neutral reviews in progress ")
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
@@ -95,7 +99,7 @@ class ReviewClassifier:
                         "user_review": comment
                     }
                 })
-
+            print(f"Classification of neutral reviews complete")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_neutral_review_classification.json"
