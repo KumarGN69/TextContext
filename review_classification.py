@@ -26,11 +26,9 @@ class ReviewClassifier:
                 )
                 sentiment = "Positive"
                 comment_classification.append({
-                    "review": {
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
-                    }
                 })
             print(f"Classification of positive reviews complete ")
             if comment_classification:
@@ -59,11 +57,9 @@ class ReviewClassifier:
                 )
                 sentiment = "Negative"
                 comment_classification.append({
-                    "review": {
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
-                    }
                 })
             print(f"Classification of negative reviews complete ")
             if comment_classification:
@@ -93,11 +89,9 @@ class ReviewClassifier:
                 )
                 sentiment = "Neutral"
                 comment_classification.append({
-                    "review": {
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
-                    }
                 })
             print(f"Classification of neutral reviews complete")
             if comment_classification:
