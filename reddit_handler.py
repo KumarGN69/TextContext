@@ -44,7 +44,7 @@ class RedditHandler:
                     post.comments.replace_more(limit=2)  # Avoid excessive API calls
                     all_posts.append({
                         "post_title": post.title,
-                        "self_text":post.selftext,
+                        "self_text": "".join(line for line in post.selftext.splitlines()),
                     })
                     time.sleep(1)  # Pause to prevent API rate limits
 

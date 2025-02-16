@@ -8,7 +8,7 @@ class ReviewClassifier:
         self.model = LLMModel()
         self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-        self.classifiers = (f"User Experience, Service, Support, Others, Technical, Audio Issues, Video Issues, "
+        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
                             f"Voice Quality, Bluetooth, WiFi, Call drop ")
     def classifyPositiveReviews(self):
         try:
@@ -21,7 +21,6 @@ class ReviewClassifier:
                     prompt=f"Classify the {comment} using the categories {self.classifiers}. "
                            f"Provide only the category name."
                 )
-                # print(classifier.response)
                 sentiment = "Positive"
                 if "User Experience" in classifier.response:
                     comment_classification.append({
@@ -57,6 +56,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_positive_review_classification.json"
                 df.to_json(json_file_name, index=False)
+                csv_file_name = "reddit_positive_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -110,6 +111,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_negative_review_classification.json"
                 df.to_json(json_file_name, index=False)
+                csv_file_name = "reddit_negative_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -164,6 +167,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_neutral_review_classification.json"
                 df.to_json(json_file_name, index=False)
+                csv_file_name = "reddit_neutral_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
