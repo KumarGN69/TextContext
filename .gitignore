@@ -9,6 +9,7 @@ __pycache__/
 #folders and files
 *.json
 *.csv
+classification_test.py
 .venv/
 pyvenv.cfg
 chromium-win64.zip

@@ -10,6 +10,8 @@ class ReviewClassifier:
         self.MODEL = os.getenv('INFERENCE_MODEL')
         self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
                             f"Voice Quality, Bluetooth, WiFi, Call drop ")
+        self.output_criteria = (f"Strictly provide only the category names as comma separated list without "
+                                f"any explanation or qualification")
 
     def classifyPositiveReviews(self):
         try:
@@ -19,47 +21,22 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify {comment} into one of the categories Technical, Usability, Audio Issues, "
-                           f"Video issues, Service, Support, Others. "
-                           f"Provide only the category name."
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
                 )
                 sentiment = "Positive"
-                if "User Experience" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Usability",
-                        "user_review":comment,
-                    })
-                elif "Service" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Service",
-                        "user_review":comment,
-                    })
-                elif "Support" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Support",
-                        "user_review":comment,
-                    })
-                elif "Technical" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Technical",
-                        "user_review":comment,
-                    })
-                else:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Others",
-                        "user_review":comment,
-                    })
+                comment_classification.append({
+                    "review": {
+                        "sentiment": sentiment,
+                        "categories": [classifier.response],
+                        "user_review": comment
+                    }
+                })
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_positive_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                # csv_file_name = "reddit_positive_review_classification.csv"
-                # df.to_csv(csv_file_name, index=False)
+                csv_file_name = "reddit_positive_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -75,46 +52,23 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
-                           f"Provide only the category name."
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
                 )
                 sentiment = "Negative"
-                if "User Experience" in classifier.response:
-                    comment_classification.append({
+                comment_classification.append({
+                    "review": {
                         "sentiment": sentiment,
-                        "classification": "Usability",
-                        "user_review": comment,
-                    })
-                elif "Service" in classifier.response:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Service",
-                        "user_review": comment,
-                    })
-                elif "Support" in classifier.response:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Support",
-                        "user_review": comment,
-                    })
-                elif "Technical" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Technical",
-                        "user_review":comment,
-                    })
-                else:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Others",
-                        "user_review": comment,
-                    })
+                        "categories": [classifier.response],
+                        "user_review": comment
+                    }
+                })
+
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_negative_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                # csv_file_name = "reddit_negative_review_classification.csv"
-                # df.to_csv(csv_file_name, index=False)
+                csv_file_name = "reddit_negative_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -130,47 +84,24 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
-                           f"Provide only the category name."
+                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
+
                 )
-                # print(classifier.response)
                 sentiment = "Neutral"
-                if "User Experience" in classifier.response:
-                    comment_classification.append({
+                comment_classification.append({
+                    "review": {
                         "sentiment": sentiment,
-                        "classification": "Usability",
-                        "user_review": comment,
-                    })
-                elif "Service" in classifier.response:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Service",
-                        "user_review": comment,
-                    })
-                elif "Support" in classifier.response:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Support",
-                        "user_review": comment,
-                    })
-                elif "Technical" in classifier.response:
-                    comment_classification.append({
-                        "sentiment":sentiment,
-                        "classification": "Technical",
-                        "user_review":comment,
-                    })
-                else:
-                    comment_classification.append({
-                        "sentiment": sentiment,
-                        "classification": "Others",
-                        "user_review": comment,
-                    })
+                        "categories": [classifier.response],
+                        "user_review": comment
+                    }
+                })
+
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_neutral_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                # csv_file_name = "reddit_neutral_review_classification.csv"
-                # df.to_csv(csv_file_name, index=False)
+                csv_file_name = "reddit_neutral_review_classification.csv"
+                df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
