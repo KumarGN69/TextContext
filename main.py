@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # Create reddit handler and fetch reddit posts based on a specific string
     reddit = RedditHandler(query=os.getenv('SEARCH_QUERY'))
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
-    # print(reviews)
+
     # analyze sentiments of the retrieved posts 
     sentiments = SentimentAnalyzer()
     sentiments.assessSentiments(reviews=reviews)
@@ -26,8 +26,6 @@ if __name__ == "__main__":
             df = pd.DataFrame(sentiments.positive_comments)
             df.to_json("reddit_positive_reviews.json")
             classifier.classifyPositiveReviews()
-            # df = pd.read_json("./reddit_positive_review_classification.json")
-            # print(df)
         except Exception as e:
             print(f"Error fetching positive reviews: {e}")
     else:
@@ -39,8 +37,6 @@ if __name__ == "__main__":
             df = pd.DataFrame(sentiments.negative_comments)
             df.to_json("reddit_negative_reviews.json")
             classifier.classifyNegativeReviews()
-            # df = pd.read_json("./reddit_negative_review_classification.json")
-            # print(df)
         except Exception as e:
             print(f"Error fetching negative reviews: {e}")
     else:
@@ -52,8 +48,6 @@ if __name__ == "__main__":
             df = pd.DataFrame(sentiments.neutral_comments)
             df.to_json("reddit_neutral_reviews.json")
             classifier.classifyNeutralReviews()
-            # df = pd.read_json("./reddit_neutral_review_classification.json")
-            # print(df)
         except Exception as e:
             print(f"Error fetching neutral reviews: {e}")
     else:

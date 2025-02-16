@@ -10,8 +10,7 @@ class RedditHandler:
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
         self.client_searchquery = query
-        self.subreddits = ["GooglePixel"]
-    
+        self.subreddits = ["GooglePixel", "Android"]
     def getRedditInstance(self):
         try:
             reddit = praw.Reddit(
@@ -30,7 +29,7 @@ class RedditHandler:
         all_posts = []
         try:
             for subreddit in self.subreddits:
-                print(f"\n Searching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
+                print(f"\nSearching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
                 reddit = self.getRedditInstance()
                 subreddit_instance = reddit.subreddit(subreddit)
                 posts = subreddit_instance.search(
