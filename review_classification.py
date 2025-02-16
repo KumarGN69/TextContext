@@ -10,8 +10,9 @@ class ReviewClassifier:
         self.MODEL = os.getenv('INFERENCE_MODEL')
         self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
                             f"Voice Quality, Bluetooth, WiFi, Call drop ")
-        self.output_criteria = (f"Strictly provide only the category names as comma separated list without "
-                                f"any explanation or qualification")
+        self.output_criteria = (f"Provide category names only from {self.classifiers} as comma separated list "
+                                f"by removing new lines,unnecessary extra white spaces "
+                                f"and without any explanation or qualification")
 
     def classifyPositiveReviews(self):
         try:
@@ -26,9 +27,11 @@ class ReviewClassifier:
                 )
                 sentiment = "Positive"
                 comment_classification.append({
+                    "review":{
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
+                    }
                 })
             print(f"Classification of positive reviews complete ")
             if comment_classification:
@@ -57,9 +60,11 @@ class ReviewClassifier:
                 )
                 sentiment = "Negative"
                 comment_classification.append({
+                    "review": {
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
+                    }
                 })
             print(f"Classification of negative reviews complete ")
             if comment_classification:
@@ -89,9 +94,11 @@ class ReviewClassifier:
                 )
                 sentiment = "Neutral"
                 comment_classification.append({
+                    "review": {
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
+                    }
                 })
             print(f"Classification of neutral reviews complete")
             if comment_classification:
