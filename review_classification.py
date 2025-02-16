@@ -10,6 +10,7 @@ class ReviewClassifier:
         self.MODEL = os.getenv('INFERENCE_MODEL')
         self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
                             f"Voice Quality, Bluetooth, WiFi, Call drop ")
+
     def classifyPositiveReviews(self):
         try:
             df= pd.read_json("./reddit_positive_reviews.json")
@@ -18,7 +19,8 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}. "
+                    prompt=f"Classify {comment} into one of the categories Technical, Usability, Audio Issues, "
+                           f"Video issues, Service, Support, Others. "
                            f"Provide only the category name."
                 )
                 sentiment = "Positive"
@@ -56,8 +58,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_positive_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                csv_file_name = "reddit_positive_review_classification.csv"
-                df.to_csv(csv_file_name, index=False)
+                # csv_file_name = "reddit_positive_review_classification.csv"
+                # df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -111,8 +113,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_negative_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                csv_file_name = "reddit_negative_review_classification.csv"
-                df.to_csv(csv_file_name, index=False)
+                # csv_file_name = "reddit_negative_review_classification.csv"
+                # df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
@@ -167,8 +169,8 @@ class ReviewClassifier:
                 df = pd.DataFrame(comment_classification)
                 json_file_name = "reddit_neutral_review_classification.json"
                 df.to_json(json_file_name, index=False)
-                csv_file_name = "reddit_neutral_review_classification.csv"
-                df.to_csv(csv_file_name, index=False)
+                # csv_file_name = "reddit_neutral_review_classification.csv"
+                # df.to_csv(csv_file_name, index=False)
             else:
                 print(" No reviews found!")
 
