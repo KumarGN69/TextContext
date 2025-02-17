@@ -8,11 +8,8 @@ class ReviewClassifier:
         self.model = LLMModel()
         self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
-                            f"Voice Quality, Bluetooth, WiFi, Call drop ")
-        self.output_criteria = (f"Provide category names only from {self.classifiers} as comma separated list "
-                                f"by removing new lines,unnecessary extra white spaces "
-                                f"and without any explanation or qualification")
+        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,Voice Quality, Bluetooth, WiFi, Call drop ")
+        self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list, ensuring: 1. No new lines or extra white spaces. 2. No additional words, explanations, or qualifiers. 3. Only relevant categories from the provided list.")
 
     def classifyPositiveReviews(self):
         try:
@@ -23,7 +20,7 @@ class ReviewClassifier:
             for comment in comment_list:
                 classifier = self.client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
+                    prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
                 )
                 sentiment = "Positive"
                 comment_classification.append({
