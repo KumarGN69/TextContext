@@ -1,4 +1,5 @@
 import praw, time, json, dotenv, os
+import pandas as pd
 
 class RedditHandler:
     """
@@ -51,6 +52,10 @@ class RedditHandler:
             print(f"Error fetching reviews: {e}")
 
         # return all_posts
+        if all_posts:
+            df = pd.DataFrame(all_posts)
+            json_filename = "all_posts.json"
+            df.to_json(json_filename,index=False)
         return all_posts
 
     
