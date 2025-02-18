@@ -43,8 +43,10 @@ class RedditHandler:
                     # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
                     post.comments.replace_more(limit=2)  # Avoid excessive API calls
                     all_posts.append({
+                        "user_review":{
                         "post_title": post.title,
                         "self_text": "".join(line for line in post.selftext.splitlines()),
+                        }
                     })
                     time.sleep(1)  # Pause to prevent API rate limits
 

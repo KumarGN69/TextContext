@@ -7,7 +7,7 @@ from review_classification import ReviewClassifier
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
-    # Create reddit handler and fetch reddit posts based on a specific string
+    # # Create reddit handler and fetch reddit posts based on a specific string
     reddit = RedditHandler(query=os.getenv('SEARCH_QUERY'))
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
     classifier = ReviewClassifier()
-    for sentiment in ["positive","negative","neutral"]:
+    for sentiment in ["positive","neutral","negative"]:
         classifier.classifyReviews(sentiment=sentiment)
         
 
