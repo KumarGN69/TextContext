@@ -11,8 +11,12 @@ class ReviewClassifier:
         self.model = LLMModel()
         self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,Voice Quality, Bluetooth, WiFi, Call drop ")
-        self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list, ensuring: 1. No new lines or extra white spaces. 2. No additional words, explanations, or qualifiers. 3. Only relevant categories from the provided list.")
+        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
+                            f"Voice Quality, Bluetooth, WiFi, Call drop ")
+        self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list, "
+                                f"ensuring: 1. No new lines or extra white spaces. "
+                                f"2. No additional words, explanations, or qualifiers. "
+                                f"3. Only relevant categories from the provided list.")
 
     def classifyReviews(self,sentiment:str):
         """
