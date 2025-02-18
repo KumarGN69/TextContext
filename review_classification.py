@@ -15,21 +15,12 @@ class ReviewClassifier:
         try:
             df= pd.read_json("./reddit_positive_reviews.json")
             comment_list = [df['user_review'][record] for record in range(0,df['user_review'].size)]
-            comment_classification =[]
             print(f"Classification of positive reviews in progress")
-            for comment in comment_list:
-                classifier = self.client.generate(
-                    model=self.MODEL,
-                    prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
+            comment_classification = self.classifyAndUpdate(
+                comment_list=comment_list,
+                sentiment ="Positive"
                 )
-                sentiment = "Positive"
-                comment_classification.append({
-                    "review":{
-                        "sentiment": sentiment,
-                        "categories": [classifier.response],
-                        "user_review": comment
-                    }
-                })
+  
             print(f"Classification of positive reviews complete ")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
@@ -50,19 +41,10 @@ class ReviewClassifier:
             comment_list = [df['user_review'][record] for record in range(0, df['user_review'].size)]
             comment_classification = []
             print(f"Classification of negative reviews in progress ")
-            for comment in comment_list:
-                classifier = self.client.generate(
-                    model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
+            comment_classification = self.classifyAndUpdate(
+                comment_list=comment_list,
+                sentiment ="Negative"
                 )
-                sentiment = "Negative"
-                comment_classification.append({
-                    "review": {
-                        "sentiment": sentiment,
-                        "categories": [classifier.response],
-                        "user_review": comment
-                    }
-                })
             print(f"Classification of negative reviews complete ")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
@@ -83,20 +65,10 @@ class ReviewClassifier:
             comment_list = [df['user_review'][record] for record in range(0, df['user_review'].size)]
             comment_classification = []
             print(f"Classification of neutral reviews in progress ")
-            for comment in comment_list:
-                classifier = self.client.generate(
-                    model=self.MODEL,
-                    prompt=f"Classify the {comment} using the categories {self.classifiers}.{self.output_criteria} "
-
+            comment_classification = self.classifyAndUpdate(
+                comment_list=comment_list,
+                sentiment ="Neutral"
                 )
-                sentiment = "Neutral"
-                comment_classification.append({
-                    "review": {
-                        "sentiment": sentiment,
-                        "categories": [classifier.response],
-                        "user_review": comment
-                    }
-                })
             print(f"Classification of neutral reviews complete")
             if comment_classification:
                 df = pd.DataFrame(comment_classification)
@@ -111,4 +83,19 @@ class ReviewClassifier:
             print(f"Error fetching reviews: {e}")
 
 
-
+    def classifyAndUpdate(self, comment_list:list,sentiment:str):
+        classifications =[]
+        for comment in comment_list:
+                classifier = self.client.generate(
+                    model=self.MODEL,
+                    prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
+                )
+                sentiment = sentiment
+                classifications.append({
+                    "review":{
+                        "sentiment": sentiment,
+                        "categories": [classifier.response],
+                        "user_review": comment
+                    }
+                })
+        return classifications    
