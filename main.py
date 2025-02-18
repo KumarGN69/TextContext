@@ -22,38 +22,9 @@ if __name__ == "__main__":
     print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
     classifier = ReviewClassifier()
-    if sentiments.positive_sentiments:
-        try:
-            df = pd.DataFrame(sentiments.positive_comments)
-            df.to_json("reddit_positive_reviews.json")
-            classifier.classifyPositiveReviews()
-        except Exception as e:
-            print(f"Error fetching positive reviews: {e}")
-    else:
-        print("No positive reviews found!")
-
-    # create json files for negative reviews with classification
-    if sentiments.negative_sentiments:
-        try:
-            df = pd.DataFrame(sentiments.negative_comments)
-            df.to_json("reddit_negative_reviews.json")
-            classifier.classifyNegativeReviews()
-        except Exception as e:
-            print(f"Error fetching negative reviews: {e}")
-    else:
-        print("No negative reviews found!")
-    
-    # create json files for neutral reviews with classification
-    if sentiments.neutral_sentiments:
-        try:
-            df = pd.DataFrame(sentiments.neutral_comments)
-            df.to_json("reddit_neutral_reviews.json")
-            classifier.classifyNeutralReviews()
-        except Exception as e:
-            print(f"Error fetching neutral reviews: {e}")
-    else:
-        print("No neutral reviews found!")
-    
+    for sentiment in ["positive","negative","neutral"]:
+        classifier.classifyReviews(sentiment=sentiment)
+        
 
 
 

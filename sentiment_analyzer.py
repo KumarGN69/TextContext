@@ -1,9 +1,12 @@
 import json
+import pandas as pd
 from textblob import TextBlob
 
 
 class SentimentAnalyzer():
+    """
 
+    """
     def __init__(self):
         self.positive_sentiments = 0
         self.negative_sentiments = 0
@@ -13,6 +16,9 @@ class SentimentAnalyzer():
         self.positive_comments = []
 
     def assessSentiments(self, reviews: list):
+        """
+
+        """
         for review in reviews:
             user_review = f"{review['post_title']}+{review['self_text']}"
             sentiment = TextBlob(review['self_text']).sentiment
@@ -34,3 +40,38 @@ class SentimentAnalyzer():
                     "sentiment": "Neutral",
                     "user_review": user_review
                 })
+                
+        self.saveSentimentsToFile()
+        
+    def saveSentimentsToFile(self):
+        """
+
+        """
+        if self.positive_sentiments:
+            try:
+                df = pd.DataFrame(self.positive_comments)
+                df.to_json("reddit_positive_reviews.json")
+            except Exception as e:
+                print(f"Error fetching positive reviews: {e}")
+        else:
+            print("No positive reviews found!")
+
+    # create json files for negative reviews with classification
+        if self.negative_sentiments:
+            try:
+                df = pd.DataFrame(self.negative_comments)
+                df.to_json("reddit_negative_reviews.json")    
+            except Exception as e:
+                print(f"Error fetching negative reviews: {e}")
+        else:
+            print("No negative reviews found!")
+        
+        # create json files for neutral reviews with classification
+        if self.neutral_sentiments:
+            try:
+                df = pd.DataFrame(self.neutral_comments)
+                df.to_json("reddit_neutral_reviews.json")
+            except Exception as e:
+                print(f"Error fetching neutral reviews: {e}")
+        else:
+            print("No neutral reviews found!")
