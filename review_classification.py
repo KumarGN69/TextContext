@@ -60,6 +60,7 @@ class ReviewClassifier:
                         "user_review": comment
                     }
                 })
+                print("classification done")
         return classifications    
     
     def saveToFile(self,sentiment:str,comment_classification:list):
