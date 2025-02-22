@@ -1,0 +1,46 @@
+Critical User Journey Problem area,Component,Feature/ Functionality,3P apps,1P apps,3P device,1P Devices  Combination
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",,"Pixel 8, Pixel 9, Pixel Fold + Pixel Buds A series"
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",,"Pixel 8, Pixel 9, Pixel Fold + Pixel Buds Pro 2"
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",,Pixel Tablet + Pixel Buds A series
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",,Pixel Tablet + Pixel Buds Pro 2
+Connection drop,,"Connectivity, Power, Notification, Media",,,,Pixel Phones + Pixel Buds + Pixel Watch
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",Windows Laptop + Pixel Buds Pro 2,
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord","GVC, Youtube, YT music, Gemini",MacBook + Pixel Buds Pro 2,
+"Crackling sound, audio not playing, connection establishment, battery issues, battery drain, battery life, media streaming","Bluetooth, Bluetooth Low Energy, Audio, Stream, Power","Audio, AVSync, Connectivity, Maestro app, Spatial Audio, notification, power, finder, OOBE, OTA, Gemini assistant, Sensors","Whatsapp call, Disney+, Netflix, Gaming, Discord",,,ChromeOS + Pixel Buds 2 Pro
+Bluetooth Reconnection Failure - (out-of-range/BT off-on),Bluetooth Stack,Automatic Reconnection,-,"YT, YTM","BMW Carkit
+Ford F150/F250
+Jeep Cherokee
+GMC Sierra
+","Pixel 7 
+Pixel 8
+Pixel 8 Pro XL"
+GSA assistant voice is cut off/not heard,Audio Routing,Audio routing,-,"YT, YTM, GSA, Gemini",Ford F250,"Pixel 7 
+Pixel 9 pro
+Pixel Fold"
+Call audio routes to DUT instead of car kit,Car Kit Integration/Bluetooth Stack,Audio Routing/Connection Management,-,"YT, YTM",Ford Sync,Pixel 8A
+Metadata does not update,Car Kit Integration/Media Framework,Metadata Synchronization,-,"YT, YTM","Hyundai Tucson
+GMC Sierra
+Toyota CK
+Audi A8","Pixel 9
+Pixel 8
+Pixel 8A"
+Message notification and previous messages not loading,Message Access Profile (MAP),Message Synchronization,-,-,"Mazda CX5
+Jeep Wrangler","Pixel 8
+Pixel 9
+"
+"Merging two calls, second call ends but DUT and HU show active conference",Telephony/Bluetooth Stack,Call Management/Conference Call Handling,-,"YT, YTM","Jeep Wrangler
+Mazda CX5
+GMC Sierra","Pixel 8
+"
+Swapping music player - metadata stuck,Media Framework/Car Kit Integration,Metadata Synchronization/Audio Focus,,"YT, YTM",BMW X,Pixel 9 Fold 2
+No phone call audio from the car ,Car Kit Integration/Bluetooth Stack,Audio Routing/Connection Management,-,"YT, YTM",BMW X5,Pixel 9 Pro XL
+Google Meet/whatsapp call shows own number instead of recipient's number ,Car Kit Integration/Bluetooth Stack,Caller ID Display/Connection Management,Whatsapp,GVC,"Ford Focus
+Ford F250
+Ford Sync","Pixel 9 pro
+Pixel 7 Pro
+Pixel Fold"
+Query/calls made via GSA route to phone,Audio Routing,Audio routing, ,"YT, YTM, GSA, Gemini","Ford Sync
+Honda CRV
+Jeep Wrangler","Pixel 7A
+Pixel 9
+Pixel 8"
