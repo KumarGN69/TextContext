@@ -9,8 +9,7 @@ __pycache__/
 #folders and files
 Output_With_Gemma2b/
 Output_with_llama3.2/
-*.json
-*.csv
+
 classification_test.py
 .venv/
 pyvenv.cfg

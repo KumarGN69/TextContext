@@ -15,4 +15,8 @@ psaw~=0.1.0
 nltk~=3.9.1
 gensim~=4.3.3
 sumy ~=0.11.0
+pytesseract~=0.3.13
+opencv-python~=4.11.0.86
+numpy~=1.26.4
+
 
