@@ -5,12 +5,12 @@ class RedditHandler:
     """
     """
 
-    def __init__(self,query):
+    def __init__(self,queries):
         dotenv.load_dotenv()
         self.client_id = os.getenv('REDDIT_CLIENT_ID')
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
-        self.client_searchquery = query
+        self.client_searchquery = queries
         self.subreddits = ["GooglePixel", "Android"]
     def getRedditInstance(self):
         try:
@@ -30,25 +30,28 @@ class RedditHandler:
         all_posts = []
         try:
             for subreddit in self.subreddits:
-                print(f"\nSearching in r/{subreddit} for posts related to: '{self.client_searchquery}'")
                 reddit = self.getRedditInstance()
-                subreddit_instance = reddit.subreddit(subreddit)
-                posts = subreddit_instance.search(
-                    query=self.client_searchquery,
-                    time_filter=os.getenv('TIME_FILTER'),
-                    limit=int(os.getenv('NUM_POSTS'))
-                    )
-                for post in posts:
-                    
-                    # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
-                    post.comments.replace_more(limit=2)  # Avoid excessive API calls
-                    all_posts.append({
-                        "user_review":{
-                        "post_title": post.title,
-                        "self_text": "".join(line for line in post.selftext.splitlines()),
-                        }
-                    })
-                    time.sleep(1)  # Pause to prevent API rate limits
+                for query in self.client_searchquery:
+                    print(f"\nSearching in r/{subreddit} for posts related to: '{query}'")
+                    # reddit = self.getRedditInstance()
+                    subreddit_instance = reddit.subreddit(subreddit)
+                    posts = subreddit_instance.search(
+                        # query=self.client_searchquery,
+                        query = query,
+                        time_filter=os.getenv('TIME_FILTER'),
+                        limit=int(os.getenv('NUM_POSTS'))
+                        )
+                    for post in posts:
+                        
+                        # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
+                        post.comments.replace_more(limit=2)  # Avoid excessive API calls
+                        all_posts.append({
+                            "user_review":{
+                            "post_title": post.title,
+                            "self_text": "".join(line for line in post.selftext.splitlines()),
+                            }
+                        })
+                        time.sleep(1)  # Pause to prevent API rate limits
 
         except Exception as e:
             print(f"Error fetching reviews: {e}")

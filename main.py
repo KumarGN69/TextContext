@@ -8,7 +8,10 @@ from review_classification import ReviewClassifier
 if __name__ == "__main__":
     dotenv.load_dotenv()
     # # Create reddit handler and fetch reddit posts based on a specific string
-    reddit = RedditHandler(query=os.getenv('SEARCH_QUERY'))
+    df= pd.read_csv(f"./search_queries.csv")
+    queries = [df['queries'][record] for record in range(0,df['queries'].size)]
+    # reddit = RedditHandler(query=os.getenv('SEARCH_QUERY'))
+    reddit = RedditHandler(queries=queries)
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
 
     # analyze sentiments of the retrieved posts 
