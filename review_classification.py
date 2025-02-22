@@ -54,13 +54,10 @@ class ReviewClassifier:
                 )
                 sentiment = sentiment
                 classifications.append({
-                    "review":{
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
-                    }
                 })
-                print("classification done")
         return classifications    
     
     def saveToFile(self,sentiment:str,comment_classification:list):

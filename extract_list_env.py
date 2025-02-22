@@ -7,7 +7,7 @@ dotenv.load_dotenv()
 model = LLMModel()
 client = model.getclientinterface()
 
-df = pd.read_csv("./inputfile.txt",header=0,delimiter=",")
+df = pd.read_csv("inputfile.csv", header=0, delimiter=",")
 
 query = client.generate(
     model= os.getenv('INFERENCE_MODEL'),
