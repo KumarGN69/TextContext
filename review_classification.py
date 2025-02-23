@@ -9,7 +9,7 @@ class ReviewClassifier:
     def __init__(self):
         dotenv.load_dotenv()
         self.model = LLMModel()
-        self.client = self.model.getclientinterface()
+        # self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
         # self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
         #                     f"Voice Quality, Bluetooth, WiFi, Call drop ")
@@ -57,21 +57,26 @@ class ReviewClassifier:
             print(f"Error fetching reviews: {e}")
 
 
-    def classifyAndUpdate(self, comment_list:list,sentiment:str):
+    def classifyAndUpdate(self, comment_list:str,sentiment:str):
         """
         """
         classifications =[]
+        # print("Entering classification")
         for comment in comment_list:
-                classifier = self.client.generate(
+                client = self.model.getclientinterface()
+                # print("Classification started")
+                classifier = client.generate(
                     model=self.MODEL,
                     prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
                 )
                 sentiment = sentiment
+                # print("Classification done")
                 classifications.append({
                         "sentiment": sentiment,
                         "categories": [classifier.response],
                         "user_review": comment
                 })
+                # print("Updates done")
         return classifications    
     
     def saveToFile(self,sentiment:str,comment_classification:list):
@@ -83,4 +88,24 @@ class ReviewClassifier:
         csv_file_name = f"reddit_{sentiment}_review_classification.csv"
         df.to_csv(csv_file_name, index=False)
 
-
+    def classifyReview(self, comment:str,sentiment:str):
+        """
+        """
+        classification = {}
+        # print("Entering classification")
+        # for comment in comment_list:
+        client = self.model.getclientinterface()
+        # print("Classification started")
+        classifier = client.generate(
+            model=self.MODEL,
+            prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
+        )
+        sentiment = sentiment
+        # print("Classification done")
+        classification= {
+                "sentiment": sentiment,
+                "categories": [classifier.response],
+                "user_review": comment
+        }
+        # print("Updates done")
+        return classification
