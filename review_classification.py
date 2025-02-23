@@ -11,12 +11,26 @@ class ReviewClassifier:
         self.model = LLMModel()
         self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-        self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
-                            f"Voice Quality, Bluetooth, WiFi, Call drop ")
+        # self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
+        #                     f"Voice Quality, Bluetooth, WiFi, Call drop ")
+        self.classifiers = {
+            "Audio Issues": ["audio", "sound"],
+            "Video Issues": ["video", "display"],
+            "User Experience": ["experience", "user"],
+            "Service": ["service", "support"],
+            "Support": ["support", "help"],
+            "Others": ["other"],
+            "Technical": ["technical", "tech"],
+            "Voice Quality": ["voice", "call quality"],
+            "Bluetooth": ["bluetooth"],
+            "WiFi": ["wifi", "wireless"],
+            "Call drop": ["call drop", "dropped call"]
+        }
         self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list, "
                                 f"ensuring: 1. No new lines or extra white spaces. "
                                 f"2. No additional words, explanations, or qualifiers. "
-                                f"3. Only relevant categories from the provided list.")
+                                f"3. Map only to the relevant categories from the provided categories: {self.classifiers} ."
+                                f"4. If none of the categories are relevant then use None")
 
     def classifyReviews(self,sentiment:str):
         """
