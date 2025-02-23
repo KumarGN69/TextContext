@@ -33,9 +33,12 @@ class ReviewClassifier:
                                 f"4. If none of the categories are relevant then use None"
                                 f"5. Do not include all categories when no relevant mapping is detected")
 
+        self.prompt = (f"Classify the {comment}.Use only the categories from {self.classifiers}" 
+                       f"Comply strictly to the citeria in {self.output_criteria} ")
+
     def classifyReviews(self,sentiment:str):
         """
-        """
+        """ 
         try:
             df= pd.read_json(f"./reddit_{sentiment}_reviews.json")
             comment_list = [df['user_review'][record] for record in range(0,df['user_review'].size)]
@@ -68,7 +71,7 @@ class ReviewClassifier:
                 # print("Classification started")
                 classifier = client.generate(
                     model=self.MODEL,
-                    prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
+                    prompt=self.prompt
                 )
                 sentiment = sentiment
                 # print("Classification done")
@@ -99,8 +102,8 @@ class ReviewClassifier:
         print("Classification started")
         classifier = client.generate(
             model=self.MODEL,
-            prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
-        )
+            prompt=self.prompt
+            )
         sentiment = sentiment
         print("Classification done")
         classification= {
