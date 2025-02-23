@@ -10,34 +10,23 @@ import dask.bag as db
 num_workers = multiprocessing.cpu_count()
 print(num_workers)
 
+#read the sentiment files
 df = pd.read_json(f"./reddit_negative_reviews.json")
 queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
 
+#create a classifier instance 
 classifier = ReviewClassifier()
 
+# function for parallel processing of classification tasks
 def classify_reviews(review: str):
     return classifier.classifyReview(sentiment="negative", comment=review)
 
-
-
-
+# main function for using dask based parallel processing
 if __name__ == "__main__":
     multiprocessing.freeze_support()
-    # with multiprocessing.Pool(processes=1) as pool:
-    #     results = pool.map(classify_reviews, queries)
-    #     print(results)
-
- 
-
-    # # # Dummy classification function
-    # # def classify_text(text):
-    # #     return f"Processed: {text}"
-
-    # # List of texts to classify
-    # texts = ["text1", "text2", "text3", "text4", "text5", "text6"]
-
+    
     # Use Dask `delayed` to create lazy computations
-    client = Client(n_workers=num_workers,processes=True,threads_per_worker=1)  # Adjust workers based on CPU cores
+    client = Client(n_workers=int((num_workers)/4),processes=True,threads_per_worker=2)  # Adjust workers based on CPU cores
     print(client)
     tasks = [delayed(classify_reviews)(review=query) for query in queries]
 

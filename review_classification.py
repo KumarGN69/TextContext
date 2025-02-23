@@ -26,11 +26,12 @@ class ReviewClassifier:
             "WiFi": ["wifi", "wireless"],
             "Call drop": ["call drop", "dropped call"]
         }
-        self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list, "
-                                f"ensuring: 1. No new lines or extra white spaces. "
+        self.output_criteria = (f"Return only category names from {self.classifiers} as a comma-separated list,ensuring: "
+                                f"1. No new lines or extra white spaces. "
                                 f"2. No additional words, explanations, or qualifiers. "
                                 f"3. Map only to the relevant categories from the provided categories: {self.classifiers} ."
-                                f"4. If none of the categories are relevant then use None")
+                                f"4. If none of the categories are relevant then use None"
+                                f"5. Do not include all categories when no relevant mapping is detected")
 
     def classifyReviews(self,sentiment:str):
         """
@@ -92,20 +93,20 @@ class ReviewClassifier:
         """
         """
         classification = {}
-        # print("Entering classification")
+        print("Entering classification")
         # for comment in comment_list:
         client = self.model.getclientinterface()
-        # print("Classification started")
+        print("Classification started")
         classifier = client.generate(
             model=self.MODEL,
             prompt=f"Classify the {comment}.Use only the categories from {self.classifiers}.{self.output_criteria} "
         )
         sentiment = sentiment
-        # print("Classification done")
+        print("Classification done")
         classification= {
                 "sentiment": sentiment,
                 "categories": [classifier.response],
                 "user_review": comment
         }
-        # print("Updates done")
+        print("Updates done")
         return classification

@@ -12,6 +12,7 @@ Output_with_llama3.2/
 Output_with_gemma7b/
 classification_test.py
 .venv/
+dump.txt
 pyvenv.cfg
 chromium-win64.zip
 deepseek-R1-Zero/
