@@ -33,7 +33,7 @@ class ReviewClassifier:
                                 f"4. If none of the categories are relevant then use None"
                                 f"5. Do not include all categories when no relevant mapping is detected")
 
-        self.prompt = (f"Classify the {comment}.Use only the categories from {self.classifiers}" 
+        self.prompt = (f"Use only the categories from {self.classifiers}" 
                        f"Comply strictly to the citeria in {self.output_criteria} ")
 
     def classifyReviews(self,sentiment:str):
@@ -71,7 +71,7 @@ class ReviewClassifier:
                 # print("Classification started")
                 classifier = client.generate(
                     model=self.MODEL,
-                    prompt=self.prompt
+                    prompt= f"Classify the {comment}. {self.prompt}"
                 )
                 sentiment = sentiment
                 # print("Classification done")
@@ -102,8 +102,8 @@ class ReviewClassifier:
         print("Classification started")
         classifier = client.generate(
             model=self.MODEL,
-            prompt=self.prompt
-            )
+            prompt=f"Classify the {comment}. {self.prompt}"
+        )
         sentiment = sentiment
         print("Classification done")
         classification= {
