@@ -18,5 +18,6 @@ sumy ~=0.11.0
 pytesseract~=0.3.13
 opencv-python~=4.11.0.86
 numpy~=1.26.4
-
+dask~=2502.2.0
+distributed~=2502.02.0
 

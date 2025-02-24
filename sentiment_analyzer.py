@@ -51,6 +51,7 @@ class SentimentAnalyzer():
             try:
                 df = pd.DataFrame(self.positive_comments)
                 df.to_json("reddit_positive_reviews.json")
+                df.to_csv("reddit_positive_reviews.csv")
             except Exception as e:
                 print(f"Error fetching positive reviews: {e}")
         else:
@@ -60,7 +61,8 @@ class SentimentAnalyzer():
         if self.negative_sentiments:
             try:
                 df = pd.DataFrame(self.negative_comments)
-                df.to_json("reddit_negative_reviews.json")    
+                df.to_json("reddit_negative_reviews.json")
+                df.to_csv("reddit_negative_reviews.csv")
             except Exception as e:
                 print(f"Error fetching negative reviews: {e}")
         else:
@@ -71,6 +73,7 @@ class SentimentAnalyzer():
             try:
                 df = pd.DataFrame(self.neutral_comments)
                 df.to_json("reddit_neutral_reviews.json")
+                df.to_csv("reddit_neutral_reviews.csv")
             except Exception as e:
                 print(f"Error fetching neutral reviews: {e}")
         else:
