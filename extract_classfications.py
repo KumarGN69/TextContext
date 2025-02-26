@@ -18,8 +18,8 @@ print(num_workers)
 classifier = ReviewClassifier()
 
 # function for parallel processing of classification tasks
-def classify_reviews(review: str):
-    return classifier.classifyReview(sentiment="negative", comment=review)
+def classify_reviews(review: str,sentiment: str):
+    return classifier.classifyReview(sentiment=sentiment, comment=review)
 
 # main function for using dask based parallel processing
 if __name__ == "__main__":
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         # Use Dask `delayed` to create lazy computations
         client = Client(n_workers=int(num_workers),processes=True,threads_per_worker=2)  # Adjust workers based on CPU cores
         print(client)
-        tasks = [delayed(classify_reviews)(review=query) for query in queries]
+        tasks = [delayed(classify_reviews)(review=query,sentiment=sentiment) for query in queries]
 
         # Execute in parallel
         results = compute(*tasks)
