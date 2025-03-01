@@ -30,7 +30,7 @@ if __name__ == "__main__":
     start = time.time()
 
     # loop through all sentiment files
-    for sentiment in ["positive"]:
+    for sentiment in ["negative"]:
         # read the sentiment files
         df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
         queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]

@@ -14,7 +14,7 @@ query = client.generate(
     prompt = (
                 f"You are an expert in writing up search queries on Reddit to extract maximum user reviews."
                 f"Generate an exhaustive set of meaningful and relevant search queries as possible using"
-                f"combinations of information in all columns of {df} for extracting relevant user reviews."
+                f"Use all possible combinations of information in all columns of {df} for extracting relevant user reviews."
                 f"Include all key words in a meaningful way."
                 f"from Reddit. Output only the queries as a list without any additional explanation or new lines."
                 f"Exclude all NaN values. Output each query on new line"

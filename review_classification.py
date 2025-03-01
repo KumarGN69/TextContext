@@ -98,7 +98,8 @@ class ReviewClassifier:
         classification = {}
         print("Entering classification")
         # for comment in comment_list:
-        client = self.model.getclientinterface()
+        model = LLMModel()
+        client = model.getclientinterface()
         print("Classification started")
         classifier = client.generate(
             model=self.MODEL,

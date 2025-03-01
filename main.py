@@ -1,9 +1,24 @@
 import json, os, dotenv
 import pandas as pd
 
+import multiprocessing, time
+import dask
+from dask import delayed, compute
+from dask.distributed import Client
+import dask.bag as db
+
 from reddit_handler import RedditHandler
 from sentiment_analyzer import SentimentAnalyzer
 from review_classification import ReviewClassifier
+
+num_workers = multiprocessing.cpu_count()
+print(num_workers)
+#create a classifier instance
+classifier = ReviewClassifier()
+
+# function for parallel processing of classification tasks
+def classify_reviews(review: str,sentiment: str):
+    return classifier.classifyReview(sentiment=sentiment, comment=review)
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
@@ -24,9 +39,33 @@ if __name__ == "__main__":
 
     print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
-    classifier = ReviewClassifier()
-    for sentiment in ["positive","neutral","negative"]:
-        classifier.classifyReviews(sentiment=sentiment)
+    # classifier = ReviewClassifier()
+    multiprocessing.freeze_support()
+
+
+    # start the classification process
+    start = time.time()
+    for sentiment in ["positive","negative","neutral"]:
+        # read the sentiment files
+        df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
+        queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
+
+        # Use Dask `delayed` to create lazy computations
+        client = Client(n_workers=int(num_workers), processes=True,
+                        threads_per_worker=2)  # Adjust workers based on CPU cores
+        print(client)
+        tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
+
+        # Execute in parallel
+        results = compute(*tasks)
+
+        # print(results)
+        # save the classifications into csv and json files
+        classifier.saveToFile(sentiment=sentiment, comment_classification=results)
+        client.close()
+    end = time.time()
+
+    print(f"time elapsed :", end - start)
         
 
 
