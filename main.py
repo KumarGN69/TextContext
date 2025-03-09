@@ -10,6 +10,7 @@ import dask.bag as db
 from reddit_handler import RedditHandler
 from sentiment_analyzer import SentimentAnalyzer
 from review_classification import ReviewClassifier
+from generate_query import GenerateSearchQueries
 
 num_workers = multiprocessing.cpu_count()
 print(num_workers)
@@ -22,6 +23,10 @@ def classify_reviews(review: str,sentiment: str):
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
+    
+    #generate queries
+    query_generator = GenerateSearchQueries()
+    query_generator.generateQueries()
     # # Create reddit handler and fetch reddit posts based on a specific string
     df= pd.read_csv(f"./search_queries.csv")
     queries = [df['queries'][record] for record in range(0,df['queries'].size)]
