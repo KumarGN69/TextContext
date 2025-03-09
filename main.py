@@ -29,43 +29,43 @@ if __name__ == "__main__":
     reddit = RedditHandler(queries=queries)
     reviews= json.loads(json.dumps(reddit.fetch_reviews()))
 
-    # analyze sentiments of the retrieved posts 
-    sentiments = SentimentAnalyzer()
-    print(f"Assessment of extracted sentiments in progress")
-    sentiments.assessSentiments(reviews=reviews)
-    print(f"Sentiment assessment summary: ")
-    # print the sentiment analysis summary
-    print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Neutral: {sentiments.neutral_sentiments}")
+    # # analyze sentiments of the retrieved posts 
+    # sentiments = SentimentAnalyzer()
+    # print(f"Assessment of extracted sentiments in progress")
+    # sentiments.assessSentiments(reviews=reviews)
+    # print(f"Sentiment assessment summary: ")
+    # # print the sentiment analysis summary
+    # print(f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Neutral: {sentiments.neutral_sentiments}")
 
-    print(f"Starting classification of reviews into different categories")
-    # create json files for positive reviews with classification
-    # classifier = ReviewClassifier()
-    multiprocessing.freeze_support()
+    # print(f"Starting classification of reviews into different categories")
+    # # create json files for positive reviews with classification
+    # # classifier = ReviewClassifier()
+    # multiprocessing.freeze_support()
 
 
-    # start the classification process
-    start = time.time()
-    for sentiment in ["positive","negative","neutral"]:
-        # read the sentiment files
-        df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
-        queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
+    # # start the classification process
+    # start = time.time()
+    # for sentiment in ["positive","negative","neutral"]:
+    #     # read the sentiment files
+    #     df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
+    #     queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
 
-        # Use Dask `delayed` to create lazy computations
-        client = Client(n_workers=int(num_workers), processes=True,
-                        threads_per_worker=2)  # Adjust workers based on CPU cores
-        print(client)
-        tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
+    #     # Use Dask `delayed` to create lazy computations
+    #     client = Client(n_workers=int(num_workers), processes=True,
+    #                     threads_per_worker=2)  # Adjust workers based on CPU cores
+    #     print(client)
+    #     tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
 
-        # Execute in parallel
-        results = compute(*tasks)
+    #     # Execute in parallel
+    #     results = compute(*tasks)
 
-        # print(results)
-        # save the classifications into csv and json files
-        classifier.saveToFile(sentiment=sentiment, comment_classification=results)
-        client.close()
-    end = time.time()
+    #     # print(results)
+    #     # save the classifications into csv and json files
+    #     classifier.saveToFile(sentiment=sentiment, comment_classification=results)
+    #     client.close()
+    # end = time.time()
 
-    print(f"time elapsed :", end - start)
+    # print(f"time elapsed :", end - start)
         
 
 
