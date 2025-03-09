@@ -96,21 +96,21 @@ class ReviewClassifier:
         """
         """
         classification = {}
-        print("Entering classification")
+        # print("Entering classification")
         # for comment in comment_list:
         model = LLMModel()
         client = model.getclientinterface()
-        print("Classification started")
+        # print("Classification started")
         classifier = client.generate(
             model=self.MODEL,
             prompt=f"Classify the {comment}. {self.prompt}"
         )
         sentiment = sentiment
-        print("Classification done")
+        # print("Classification done")
         classification= {
                 "sentiment": sentiment,
                 "categories": [classifier.response],
                 "user_review": comment
         }
-        print("Updates done")
+        # print("Updates done")
         return classification

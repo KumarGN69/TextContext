@@ -1,17 +1,19 @@
 import praw, time, json, dotenv, os
 import pandas as pd
 
+
 class RedditHandler:
     """
     """
 
-    def __init__(self,queries):
+    def __init__(self, queries):
         dotenv.load_dotenv()
         self.client_id = os.getenv('REDDIT_CLIENT_ID')
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
         self.client_searchquery = queries
         self.subreddits = ["GooglePixel", "Pixel"]
+
     def getRedditInstance(self):
         try:
             reddit = praw.Reddit(
@@ -24,7 +26,7 @@ class RedditHandler:
         except Exception as e:
             print(f"Error authenticating with Reddit: {e}")
             exit()
-   
+
     def fetch_reviews(self):
         """Fetch user reviews (comments) from Reddit posts related to the search query."""
         all_posts = []
@@ -37,18 +39,17 @@ class RedditHandler:
                     subreddit_instance = reddit.subreddit(subreddit)
                     posts = subreddit_instance.search(
                         # query=self.client_searchquery,
-                        query = query,
+                        query=query,
                         time_filter=os.getenv('TIME_FILTER'),
                         limit=int(os.getenv('NUM_POSTS'))
-                        )
+                    )
                     for post in posts:
-                        
                         # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
                         post.comments.replace_more(limit=2)  # Avoid excessive API calls
                         all_posts.append({
-                            "user_review":{
-                            "post_title": post.title,
-                            "self_text": "".join(line for line in post.selftext.splitlines()),
+                            "user_review": {
+                                "post_title": post.title,
+                                "self_text": "".join(line for line in post.selftext.splitlines()),
                             }
                         })
                         time.sleep(1)  # Pause to prevent API rate limits
@@ -60,7 +61,7 @@ class RedditHandler:
         if all_posts:
             df = pd.DataFrame(all_posts)
             json_filename = "all_posts.json"
-            df.to_json(json_filename,index=False)
+            csv_filename = "all_posts.csv"
+            df.to_json(json_filename, index=False)
+            df.to_csv(csv_filename,index=False)
         return all_posts
-
-    
