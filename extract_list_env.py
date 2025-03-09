@@ -19,7 +19,8 @@ query = client.generate(
                 f"Generate exhaustive set of meaningful and relevant search queries containing combination"
                 f"of information in {df['1P Devices  Combination']} and {df['Critical User Journey Problem area']}"
                 f" and {df['Component']} and {df['Feature/ Functionality']}"
-                f"Output only the queries as a list without any additional explanation or new lines."
+                f"Output only those queries which include the information in {df['Critical User Journey Problem area']}"
+                f"Output the queries as a list without any additional explanation or new lines."
                 f"Exclude all NaN values. Output each query on new line"
                 f"DO not include - in front of the query"
         )
