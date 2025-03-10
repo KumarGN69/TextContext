@@ -24,7 +24,7 @@ class SentimentAnalyzer():
             user_review = f"{review['user_review']['post_title']}+{review['user_review']['self_text']}"
             # user_review = f"{review['post_title']}+{review['self_text']}"
             sentiment = TextBlob(user_review).sentiment
-            if sentiment.subjectivity <= 0.5 and sentiment.polarity > 0.05:
+            if sentiment.subjectivity <= 0.65 and sentiment.polarity > 0.05:
                 self.positive_sentiments += 1
                 self.positive_comments.append(
                     {
@@ -33,7 +33,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.positive_comments)
-            elif sentiment.subjectivity <= 0.5 and sentiment.polarity < -0.05:
+            elif sentiment.subjectivity <= 0.65 and sentiment.polarity < -0.05:
                 self.negative_sentiments += 1
                 self.negative_comments.append(
                     {
@@ -42,7 +42,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.neutral_sentiments)
-            elif sentiment.subjectivity <= 0.5 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
+            elif sentiment.subjectivity <= 0.65 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
                 self.neutral_sentiments += 1
                 self.neutral_comments.append(
                     {
