@@ -1,13 +1,20 @@
 import json
 import pandas as pd
 from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from pandas import DataFrame
 
 
 class SentimentAnalyzer():
     """
 
     """
+
     def __init__(self):
+        """
+            Class for assessing the sentiments for set of extracted reviews
+            uses vader sentiment analyzer
+        """
         self.positive_sentiments = 0
         self.negative_sentiments = 0
         self.neutral_sentiments = 0
@@ -16,15 +23,20 @@ class SentimentAnalyzer():
         self.neutral_comments = []
         self.positive_comments = []
         self.unclassified_comments = []
-    def assessSentiments(self, reviews: list):
+        self.sentiment_analyzer = SentimentIntensityAnalyzer()
+
+    def assessSentiments(self, reviews):
         """
 
+        :param reviews: Extracted reviews , read from saved file
+        :return: None.
+        :Saves the sentiments to different csv and json files, positive, negative, neutral and unclassfied
         """
-        for review in reviews:
-            user_review = f"{review['user_review']['post_title']}+{review['user_review']['self_text']}"
-            # user_review = f"{review['post_title']}+{review['self_text']}"
-            sentiment = TextBlob(user_review).sentiment
-            if sentiment.subjectivity <= 0.65 and sentiment.polarity > 0.05:
+        user_reviews = [f"{reviews['post_title'][record]}.{reviews['self_text'][record]}" for record in range(0,reviews['post_title'].size)]
+
+        for user_review in user_reviews:
+            sentiment_score = self.sentiment_analyzer.polarity_scores(user_review)['compound']
+            if sentiment_score >= 0.05:
                 self.positive_sentiments += 1
                 self.positive_comments.append(
                     {
@@ -33,7 +45,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.positive_comments)
-            elif sentiment.subjectivity <= 0.65 and sentiment.polarity < -0.05:
+            elif sentiment_score <= -0.05:
                 self.negative_sentiments += 1
                 self.negative_comments.append(
                     {
@@ -42,7 +54,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.neutral_sentiments)
-            elif sentiment.subjectivity <= 0.65 and (sentiment.polarity >= -0.05 and sentiment.polarity <= 0.05):
+            elif sentiment_score >-0.05 and sentiment_score < 0.05:
                 self.neutral_sentiments += 1
                 self.neutral_comments.append(
                     {
@@ -59,12 +71,13 @@ class SentimentAnalyzer():
                         "user_review": user_review
                     }
                 )
-                print(f"Subjectivity of unclassified review: {sentiment.subjectivity}")
+            #     print(f"Subjectivity of unclassified review: {sentiment.subjectivity}")
         self.saveSentimentsToFile()
-        
+
     def saveSentimentsToFile(self):
         """
-
+        Saves the assessed sentiments to separate csv, json files for positive, negative, neutral and unclassfied
+        :return: None
         """
         if self.positive_sentiments:
             try:
@@ -76,7 +89,7 @@ class SentimentAnalyzer():
         else:
             print("No positive reviews found!")
 
-    # create json files for negative reviews with classification
+        # create json files for negative reviews with classification
         if self.negative_sentiments:
             try:
                 df = pd.DataFrame(self.negative_comments)
@@ -86,7 +99,7 @@ class SentimentAnalyzer():
                 print(f"Error fetching negative reviews: {e}")
         else:
             print("No negative reviews found!")
-        
+
         # create json files for neutral reviews with classification
         if self.neutral_sentiments:
             try:

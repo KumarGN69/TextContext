@@ -1,5 +1,5 @@
 import pandas as pd
-import dotenv, os
+import dotenv, os, csv
 from custom_llm import LLMModel
 
 
@@ -60,4 +60,4 @@ class GenerateSearchQueries:
 
         df = pd.DataFrame(queries)
         df.to_json("./search_queries.json", index=False)
-        df.to_csv("./search_queries.csv", index=False)
+        df.to_csv("./search_queries.csv", index=False,quoting=csv.QUOTE_ALL)

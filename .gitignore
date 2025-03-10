@@ -44,8 +44,6 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-.csv
-.json
 
 # Installer logs
 pip-log.txt
@@ -65,7 +63,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
+.csv
+.json
+.xml
 # Translations
 *.mo
 *.pot
