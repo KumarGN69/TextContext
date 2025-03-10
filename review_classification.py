@@ -34,7 +34,7 @@ class ReviewClassifier:
                                 f"5. Do not include all categories when no relevant mapping is detected")
 
         self.prompt = (f"Use only the categories from {self.classifiers}" 
-                       f"Comply strictly to the citeria in {self.output_criteria} ")
+                       f"Use the specific criteria listed in {self.output_criteria} ")
 
     def classifyReviews(self,sentiment:str):
         """

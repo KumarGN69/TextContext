@@ -56,7 +56,7 @@ class GenerateSearchQueries:
             queries.append({
                 "queries": search_query
             })
-            # print(search_query)
+            print(search_query)
 
         df = pd.DataFrame(queries)
         df.to_json("./search_queries.json", index=False)

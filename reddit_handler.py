@@ -27,12 +27,13 @@ class RedditHandler:
             print(f"Error authenticating with Reddit: {e}")
             exit()
 
-    def fetch_reviews(self):
+    def fetch_posts(self):
         """Fetch user reviews (comments) from Reddit posts related to the search query."""
         all_posts = []
         try:
+            reddit = self.getRedditInstance()
             for subreddit in self.subreddits:
-                reddit = self.getRedditInstance()
+                # reddit = self.getRedditInstance()
                 for query in self.client_searchquery:
                     print(f"\nSearching in r/{subreddit} for posts related to: '{query}'")
                     # reddit = self.getRedditInstance()
@@ -43,6 +44,7 @@ class RedditHandler:
                         time_filter=os.getenv('TIME_FILTER'),
                         limit=int(os.getenv('NUM_POSTS'))
                     )
+                    # print(len(posts))
                     for post in posts:
                         # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
                         post.comments.replace_more(limit=2)  # Avoid excessive API calls

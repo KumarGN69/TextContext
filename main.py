@@ -26,7 +26,7 @@ def classify_reviews(review: str, sentiment: str):
 if __name__ == "__main__":
     dotenv.load_dotenv()
     # ----------------------------------------------------------------
-    #generate search queries
+    # generate search queries
     start = time.time()
     query_generator = GenerateSearchQueries()
     query_generator.generateQueries()
@@ -42,25 +42,28 @@ if __name__ == "__main__":
 
     # create Reddit handler and fetch reviews
     reddit = RedditHandler(queries=queries)
-    reviews = json.loads(json.dumps(reddit.fetch_reviews()))
+    posts= json.loads(json.dumps(reddit.fetch_posts()))
     end = time.time()
     print(f"time taken for fetching reviews", end - start)
     #----------------------------------------------------------------
-
+    #
     # ----------------------------------------------------------------
     # analyze sentiments of the retrieved posts
     start = time.time()
     print(f"Starting Sentiment analysis")
+
+
     sentiments = SentimentAnalyzer()
-    sentiments.assessSentiments(reviews=reviews)
+    sentiments.assessSentiments(reviews=posts)
     # print the sentiment analysis summary
     print(
-        f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, Neutral: {sentiments.neutral_sentiments}")
+        f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, "
+        f" Neutral: {sentiments.neutral_sentiments}, Unclassified: {sentiments.unclassified_sentiments}")
     end = time.time()
     print(f"time taken for sentiment analysis", end - start)
-    #-----------------------------------------------------------------
-
-    #----------------------------------------------------------------
+    # #-----------------------------------------------------------------
+    #
+    # #----------------------------------------------------------------
     print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
     # classifier = ReviewClassifier()
@@ -69,7 +72,7 @@ if __name__ == "__main__":
 
     # start the classification process
     start = time.time()
-    for sentiment in ["positive","neutral","negative"]:
+    for sentiment in ["neutral","negative"]:
         # read the sentiment files
         df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
         queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
