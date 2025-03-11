@@ -65,33 +65,34 @@ if __name__ == "__main__":
     # # #-----------------------------------------------------------------
     # #
     # # #----------------------------------------------------------------
-    # print(f"Starting classification of reviews into different categories")
-    # # create json files for positive reviews with classification
-    # # classifier = ReviewClassifier()
-    # multiprocessing.freeze_support()
-    #
-    #
-    # # start the classification process
-    # start = time.time()
-    # for sentiment in ["neutral","negative"]:
-    #     # read the sentiment files
-    #     df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
-    #     queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
-    #
-    #     # Use Dask `delayed` to create lazy computations
-    #     client = Client(n_workers=int(num_workers), processes=True,
-    #                     threads_per_worker=2)  # Adjust workers based on CPU cores
-    #     print(client)
-    #     tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
-    #
-    #     # Execute in parallel
-    #     results = compute(*tasks)
-    #
-    #     # print(results)
-    #     # save the classifications into csv and json files
-    #     classifier.saveToFile(sentiment=sentiment, comment_classification=results)
-    #     client.close()
-    # end = time.time()
-    #
-    # print(f"time taken classifying reviews :", end - start)
+    print(f"Starting classification of reviews into different categories")
+    # create json files for positive reviews with classification
+    # classifier = ReviewClassifier()
+    multiprocessing.freeze_support()
+
+
+    # start the classification process
+    start = time.time()
+    for sentiment in ["neutral","negative"]:
+        # read the sentiment files
+        df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
+        df = df.astype(str)
+        queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
+
+        # Use Dask `delayed` to create lazy computations
+        client = Client(n_workers=int(num_workers), processes=True,
+                        threads_per_worker=2)  # Adjust workers based on CPU cores
+        print(client)
+        tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
+
+        # Execute in parallel
+        results = compute(*tasks)
+
+        # print(results)
+        # save the classifications into csv and json files
+        classifier.saveToFile(sentiment=sentiment, comment_classification=results)
+        client.close()
+    end = time.time()
+
+    print(f"time taken classifying reviews :", end - start)
     # #----------------------------------------------------------------

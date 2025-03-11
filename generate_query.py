@@ -50,7 +50,7 @@ class GenerateSearchQueries:
 
         )
     )
-        search_queries = (query.response).splitlines()
+        search_queries = query.response.splitlines()
         queries = []
         for search_query in search_queries:
             queries.append({
@@ -59,5 +59,6 @@ class GenerateSearchQueries:
             print(search_query)
 
         df = pd.DataFrame(queries)
+        df = df.astype(str)
         df.to_json("./search_queries.json", index=False)
         df.to_csv("./search_queries.csv", index=False,quoting=csv.QUOTE_ALL)

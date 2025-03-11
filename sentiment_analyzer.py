@@ -1,4 +1,4 @@
-import json
+import json, csv
 import pandas as pd
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -32,6 +32,7 @@ class SentimentAnalyzer():
         :return: None.
         :Saves the sentiments to different csv and json files, positive, negative, neutral and unclassfied
         """
+        reviews = reviews.astype(str)
         user_reviews = [f"{reviews['post_title'][record]}.{reviews['self_text'][record]}" for record in range(0,reviews['post_title'].size)]
 
         for user_review in user_reviews:
@@ -104,8 +105,8 @@ class SentimentAnalyzer():
         if self.neutral_sentiments:
             try:
                 df = pd.DataFrame(self.neutral_comments)
-                df.to_json("reddit_neutral_reviews.json")
-                df.to_csv("reddit_neutral_reviews.csv")
+                df.to_json("reddit_neutral_reviews.json",index=False)
+                df.to_csv("reddit_neutral_reviews.csv",index=False,quoting=csv.QUOTE_ALL,quotechar='"')
             except Exception as e:
                 print(f"Error fetching neutral reviews: {e}")
         else:

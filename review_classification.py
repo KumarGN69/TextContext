@@ -41,6 +41,7 @@ class ReviewClassifier:
         """ 
         try:
             df= pd.read_json(f"./reddit_{sentiment}_reviews.json")
+            df = df.astype(str)
             comment_list = [df['user_review'][record] for record in range(0,df['user_review'].size)]
             print(f"Classification of {sentiment} reviews in progress")
             comment_classification = self.classifyAndUpdate(
