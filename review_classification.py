@@ -74,11 +74,25 @@ class ReviewClassifier:
                     prompt= f"Classify the {comment} adhering to guidelines in {self.prompt}"
                 )
                 sentiment = sentiment
+                summarizer = client.generate(
+                    model=self.MODEL,
+                    prompt= f"Summarize the most significant and important parts of {comment}"
+                            f"into not more than three sentences"
+                )
+                testcase = client.generate(
+                    model=self.MODEL,
+                    prompt=f"You an are experienced Software quality analyst and tester"
+                           f"write a testcase with detailed steps to test and validate the key issue that "
+                           f"user is describing in {comment}"
+                           f"use words and description that a tester would easy understand"
+                )
                 # print("Classification done")
                 classifications.append({
                         "sentiment": sentiment,
                         "categories": [classifier.response],
-                        "user_review": comment
+                        "user_review": comment,
+                        "summary": [summarizer.response],
+                        "test_case":[testcase.response]
                 })
                 # print("Updates done")
         return classifications    
@@ -107,10 +121,24 @@ class ReviewClassifier:
         )
         sentiment = sentiment
         # print("Classification done")
+        summarizer = client.generate(
+            model=self.MODEL,
+            prompt=f"Summarize the most significant and important parts of {comment}"
+                   f"into not more than three sentences"
+        )
+        testcase = client.generate(
+            model=self.MODEL,
+            prompt= f"You an are experienced Software quality analyst and tester"
+                    f"write a testcase with detailed steps to test and validate the key issue that "
+                    f"user is describing in {comment}"
+                    f"use words and description that a tester would easy understand"
+        )
         classification= {
                 "sentiment": sentiment,
                 "categories": [classifier.response],
-                "user_review": comment
+                "user_review": comment,
+                "summary": [summarizer.response],
+                "test_case":[testcase.response]
         }
         # print("Updates done")
         return classification

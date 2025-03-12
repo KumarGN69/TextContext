@@ -51,17 +51,17 @@ if __name__ == "__main__":
     # # #
     # # # ----------------------------------------------------------------
     # # # analyze sentiments of the retrieved posts
-    start = time.time()
-    print(f"Starting Sentiment analysis")
-    posts = pd.read_csv('./all_posts.csv')
-    sentiments = SentimentAnalyzer()
-    sentiments.assessSentiments(reviews=posts)
-    # print the sentiment analysis summary
-    print(
-        f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, "
-        f" Neutral: {sentiments.neutral_sentiments}, Unclassified: {sentiments.unclassified_sentiments}")
-    end = time.time()
-    print(f"time taken for sentiment analysis", end - start)
+    # start = time.time()
+    # print(f"Starting Sentiment analysis")
+    # posts = pd.read_csv('./all_posts.csv')
+    # sentiments = SentimentAnalyzer()
+    # sentiments.assessSentiments(reviews=posts)
+    # # print the sentiment analysis summary
+    # print(
+    #     f"Positive: {sentiments.positive_sentiments}, Negative:{sentiments.negative_sentiments}, "
+    #     f" Neutral: {sentiments.neutral_sentiments}, Unclassified: {sentiments.unclassified_sentiments}")
+    # end = time.time()
+    # print(f"time taken for sentiment analysis", end - start)
     # # # #-----------------------------------------------------------------
     # # #
     # # # #----------------------------------------------------------------
