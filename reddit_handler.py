@@ -85,8 +85,9 @@ class RedditHandler:
     # -----------------------------------------------------------------
         # save to file
         if all_posts:
-            all_posts = all_posts.astype(str)
+            # all_posts = all_posts.astype(str)
             df = pd.DataFrame(all_posts)
+            df = df.astype(str)
             json_filename = "all_posts.json"
             csv_filename = "all_posts.csv"
             df.to_json(json_filename, index=False, )

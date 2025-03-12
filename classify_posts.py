@@ -44,9 +44,9 @@ def classify_sentiment(review):
     :return: sentiment text based on score
     """
     score = analyzer.polarity_scores(review)['compound']
-    if score >= 0.05:
+    if score >= 0.1:
         return "Positive"
-    elif score <= - 0.05:
+    elif score <= - 0.1:
         return "Negative"
     else:
         return "Neutral"

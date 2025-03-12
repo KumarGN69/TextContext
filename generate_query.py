@@ -41,7 +41,7 @@ class GenerateSearchQueries:
                 f"- Exclude any entry with missing values (NaNs) in ANY field"
                 f"- Create 20-30 word natural phrases, not keyword lists"
                 f"- Blend elements contextually (e.g., '[Device] [Problem] during [Feature] usage due to [Component]')"
-                f"- Output as clean text with one query per line"
+                f"- Output as clean text with one query per line without numbering"
                 f"- No markdown, numbering, or special characters"
                 
                 f"Example structure:"

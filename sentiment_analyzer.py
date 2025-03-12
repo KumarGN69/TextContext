@@ -7,12 +7,14 @@ from pandas import DataFrame
 
 class SentimentAnalyzer():
     """
-
+        class to analyze sentiment for given review
+        create separate json and csv files for neutral,unclassified positive and negative sentiments
+        uses Vader Sentiment library. The threshold values for sentiment score is an approximation
     """
 
     def __init__(self):
         """
-            Class for assessing the sentiments for set of extracted reviews
+            constructor for the class to assess the sentiments for set of extracted reviews
             uses vader sentiment analyzer
         """
         self.positive_sentiments = 0
@@ -27,7 +29,7 @@ class SentimentAnalyzer():
 
     def assessSentiments(self, reviews):
         """
-
+         Asses the sentiments . Threshold for sentiment score is an approximation
         :param reviews: Extracted reviews , read from saved file
         :return: None.
         :Saves the sentiments to different csv and json files, positive, negative, neutral and unclassfied
@@ -37,7 +39,7 @@ class SentimentAnalyzer():
 
         for user_review in user_reviews:
             sentiment_score = self.sentiment_analyzer.polarity_scores(user_review)['compound']
-            if sentiment_score >= 0.05:
+            if sentiment_score >= 0.1:
                 self.positive_sentiments += 1
                 self.positive_comments.append(
                     {
@@ -46,7 +48,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.positive_comments)
-            elif sentiment_score <= -0.05:
+            elif sentiment_score <= -0.1:
                 self.negative_sentiments += 1
                 self.negative_comments.append(
                     {
@@ -55,7 +57,7 @@ class SentimentAnalyzer():
                     }
                 )
                 # print(self.neutral_sentiments)
-            elif sentiment_score >-0.05 and sentiment_score < 0.05:
+            elif sentiment_score >-0.1 and sentiment_score < 0.1:
                 self.neutral_sentiments += 1
                 self.neutral_comments.append(
                     {

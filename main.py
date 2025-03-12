@@ -27,30 +27,30 @@ if __name__ == "__main__":
     dotenv.load_dotenv()
     # ----------------------------------------------------------------
     # generate search queries
-    start = time.time()
-    query_generator = GenerateSearchQueries()
-    query_generator.generateQueries()
-    end = time.time()
-    print(f"time taken for generating queries", end - start)
+    # start = time.time()
+    # query_generator = GenerateSearchQueries()
+    # query_generator.generateQueries()
+    # end = time.time()
+    # print(f"time taken for generating queries", end - start)
     # ----------------------------------------------------------------
 
-    # ----------------------------------------------------------------
-    # Create reddit handler and fetch reddit posts based on a specific string
-    start = time.time()
-    df = pd.read_csv(f"./search_queries.csv")
-    queries = [df['queries'][record] for record in range(0, df['queries'].size)]
-
-    # create Reddit handler and fetch reviews
-    reddit = RedditHandler(queries=queries)
-    # posts= json.loads(json.dumps(reddit.fetch_posts()))
-    # fetch posts from reddit for given search strings
-    reddit.fetch_posts()
-    end = time.time()
-    print(f"time taken for fetching posts", end - start)
-    # #----------------------------------------------------------------
-    # #
     # # ----------------------------------------------------------------
-    # # analyze sentiments of the retrieved posts
+    # # Create reddit handler and fetch reddit posts based on a specific string
+    # start = time.time()
+    # df = pd.read_csv(f"./search_queries.csv")
+    # queries = [df['queries'][record] for record in range(0, df['queries'].size)]
+    #
+    # # create Reddit handler and fetch reviews
+    # reddit = RedditHandler(queries=queries)
+    # # posts= json.loads(json.dumps(reddit.fetch_posts()))
+    # # fetch posts from reddit for given search strings
+    # reddit.fetch_posts()
+    # end = time.time()
+    # print(f"time taken for fetching posts", end - start)
+    # # #----------------------------------------------------------------
+    # # #
+    # # # ----------------------------------------------------------------
+    # # # analyze sentiments of the retrieved posts
     start = time.time()
     print(f"Starting Sentiment analysis")
     posts = pd.read_csv('./all_posts.csv')
@@ -62,9 +62,9 @@ if __name__ == "__main__":
         f" Neutral: {sentiments.neutral_sentiments}, Unclassified: {sentiments.unclassified_sentiments}")
     end = time.time()
     print(f"time taken for sentiment analysis", end - start)
-    # # #-----------------------------------------------------------------
-    # #
-    # # #----------------------------------------------------------------
+    # # # #-----------------------------------------------------------------
+    # # #
+    # # # #----------------------------------------------------------------
     print(f"Starting classification of reviews into different categories")
     # create json files for positive reviews with classification
     # classifier = ReviewClassifier()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     # start the classification process
     start = time.time()
-    for sentiment in ["neutral","negative"]:
+    for sentiment in ["positive","neutral","negative"]:
         # read the sentiment files
         df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
         df = df.astype(str)
@@ -95,4 +95,4 @@ if __name__ == "__main__":
     end = time.time()
 
     print(f"time taken classifying reviews :", end - start)
-    # #----------------------------------------------------------------
+    # # #----------------------------------------------------------------

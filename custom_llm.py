@@ -44,9 +44,7 @@ class LLMModel:
             base_url=self.MODEL_URL,
             api_key=self.API_KEY,
             model=self.MODEL_NAME,
-            # format=OUTPUT_FORMAT,
             temperature=self.MODEL_TEMPERATURE,
-            max_tokens = self.MAX_TOKENS,
             top_k= self.TOP_K
         )
     def getchatinstance(self):

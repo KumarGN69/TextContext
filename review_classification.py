@@ -12,7 +12,7 @@ class ReviewClassifier:
         # self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
         # self.classifiers = (f"Audio Issues, Video Issues,User Experience, Service, Support, Others, Technical,"
-        #                     f"Voice Quality, Bluetooth, WiFi, Call drop ")
+        #                     f"Voice Quality, Bluetooth, Wi-Fi, Call drop ")
         self.classifiers = {
             "Audio Issues": ["audio", "sound"],
             "Video Issues": ["video", "display"],
@@ -30,8 +30,7 @@ class ReviewClassifier:
                                 f"1. No new lines or extra white spaces. "
                                 f"2. No additional words, explanations, or qualifiers. "
                                 f"3. Map only to the relevant categories from the provided categories: {self.classifiers} ."
-                                f"4. If none of the categories are relevant then use None"
-                                f"5. Do not include all categories when no relevant mapping is detected")
+                                f"4. Do not include all categories when no relevant mapping is detected.Use None")
 
         self.prompt = (f"Use only the categories from {self.classifiers}" 
                        f"Use the specific criteria listed in {self.output_criteria} ")
@@ -72,7 +71,7 @@ class ReviewClassifier:
                 # print("Classification started")
                 classifier = client.generate(
                     model=self.MODEL,
-                    prompt= f"Classify the {comment}. {self.prompt}"
+                    prompt= f"Classify the {comment} adhering to guidelines in {self.prompt}"
                 )
                 sentiment = sentiment
                 # print("Classification done")
@@ -103,8 +102,8 @@ class ReviewClassifier:
         client = model.getclientinterface()
         # print("Classification started")
         classifier = client.generate(
-            model=self.MODEL,
-            prompt=f"Classify the {comment}. {self.prompt}"
+            model= self.MODEL,
+            prompt= f"Classify the {comment} adhering to guidelines in {self.prompt}"
         )
         sentiment = sentiment
         # print("Classification done")
