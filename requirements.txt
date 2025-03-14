@@ -22,4 +22,5 @@ dask~=2025.2.0
 distributed~=2025.02.0
 vadersentiment~=3.3.2
 transformers~=4.49.0
+pydantic~=2.10.6
 

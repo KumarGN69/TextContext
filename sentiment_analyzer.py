@@ -85,8 +85,8 @@ class SentimentAnalyzer():
         if self.positive_sentiments:
             try:
                 df = pd.DataFrame(self.positive_comments)
-                df.to_json("reddit_positive_reviews.json")
-                df.to_csv("reddit_positive_reviews.csv")
+                df.to_json("reddit_positive_reviews.json",index=False)
+                df.to_csv("reddit_positive_reviews.csv",index=False,quoting=csv.QUOTE_ALL,quotechar='"')
             except Exception as e:
                 print(f"Error fetching positive reviews: {e}")
         else:
@@ -96,8 +96,8 @@ class SentimentAnalyzer():
         if self.negative_sentiments:
             try:
                 df = pd.DataFrame(self.negative_comments)
-                df.to_json("reddit_negative_reviews.json")
-                df.to_csv("reddit_negative_reviews.csv")
+                df.to_json("reddit_negative_reviews.json",index=False)
+                df.to_csv("reddit_negative_reviews.csv",index=False,quoting=csv.QUOTE_ALL,quotechar='"')
             except Exception as e:
                 print(f"Error fetching negative reviews: {e}")
         else:
@@ -118,8 +118,8 @@ class SentimentAnalyzer():
         if self.unclassified_sentiments:
             try:
                 df = pd.DataFrame(self.unclassified_comments)
-                df.to_json("reddit_unclassified_reviews.json")
-                df.to_csv("reddit_unclassified_reviews.csv")
+                df.to_json("reddit_unclassified_reviews.json",index=False)
+                df.to_csv("reddit_unclassified_reviews.csv",index=False,quoting=csv.QUOTE_ALL,quotechar='"')
             except Exception as e:
                 print(f"Error fetching unclassified reviews: {e}")
         else:

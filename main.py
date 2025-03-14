@@ -73,9 +73,9 @@ if __name__ == "__main__":
 
     # start the classification process
     start = time.time()
-    for sentiment in ["positive","neutral","negative"]:
+    for sentiment in ["neutral"]:
         # read the sentiment files
-        df = pd.read_json(f"./reddit_{sentiment}_reviews.json")
+        df = pd.read_csv(f"./reddit_{sentiment}_reviews.csv")
         df = df.astype(str)
         queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
         # Execute in parallel
         results = compute(*tasks)
 
-        # print(results)
+        # print(json.dumps(results))
         # save the classifications into csv and json files
         classifier.saveToFile(sentiment=sentiment, comment_classification=results)
         client.close()
