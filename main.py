@@ -12,6 +12,8 @@ from sentiment_analyzer import SentimentAnalyzer
 from review_classification import ReviewClassifier
 from generate_query import GenerateSearchQueries
 
+#------configuration to force dask scheduler to use full parallel processing -----------------
+dask.config.set({"distributed.scheduler.worker-ttl":None})
 num_workers = multiprocessing.cpu_count()
 print(num_workers)
 #create a classifier instance
@@ -25,8 +27,7 @@ def classify_reviews(review: str, sentiment: str):
 
 if __name__ == "__main__":
     dotenv.load_dotenv()
-    # ----------------------------------------------------------------
-    # generate search queries
+    # -----------------generate search queries----------------------------------------------
     # start = time.time()
     # query_generator = GenerateSearchQueries()
     # query_generator.generateQueries()
@@ -34,8 +35,7 @@ if __name__ == "__main__":
     # print(f"time taken for generating queries", end - start)
     # ----------------------------------------------------------------
 
-    # # ----------------------------------------------------------------
-    # # Create reddit handler and fetch reddit posts based on a specific string
+    # # ----------------fetch reddit posts------------------------------------------------
     # start = time.time()
     # df = pd.read_csv(f"./search_queries.csv")
     # queries = [df['queries'][record] for record in range(0, df['queries'].size)]
@@ -47,10 +47,9 @@ if __name__ == "__main__":
     # reddit.fetch_posts()
     # end = time.time()
     # print(f"time taken for fetching posts", end - start)
-    # # #----------------------------------------------------------------
-    # # #
-    # # # ----------------------------------------------------------------
-    # # # analyze sentiments of the retrieved posts
+    # #----------------------------------------------------------------
+    # #
+    # # ---------------analyze sentiments -------------------------------------------------
     # start = time.time()
     # print(f"Starting Sentiment analysis")
     # posts = pd.read_csv('./all_posts.csv')
@@ -62,37 +61,43 @@ if __name__ == "__main__":
     #     f" Neutral: {sentiments.neutral_sentiments}, Unclassified: {sentiments.unclassified_sentiments}")
     # end = time.time()
     # print(f"time taken for sentiment analysis", end - start)
-    # # # #-----------------------------------------------------------------
-    # # #
-    # # # #----------------------------------------------------------------
+    #-----------------------------------------------------------------
+
+    #---------------classify into labels-------------------------------------------------
     print(f"Starting classification of reviews into different categories")
-    # create json files for positive reviews with classification
-    # classifier = ReviewClassifier()
     multiprocessing.freeze_support()
-
-
     # start the classification process
     start = time.time()
     for sentiment in ["neutral"]:
-        # read the sentiment files
+        #--------------read the sentiment files-------------------
         df = pd.read_csv(f"./reddit_{sentiment}_reviews.csv")
         df = df.astype(str)
         queries = [df['user_review'][record] for record in range(0, df['user_review'].size)]
 
-        # Use Dask `delayed` to create lazy computations
-        client = Client(n_workers=int(num_workers), processes=True,
+        #--------------Use Dask `delayed` to create lazy computations---------
+        client = Client(n_workers=int(num_workers/2), processes=True,
                         threads_per_worker=2)  # Adjust workers based on CPU cores
-        print(client)
+        print(client.dashboard_link)
+
+        #-------------parallel processing -------------------------
         tasks = [delayed(classify_reviews)(review=query, sentiment=sentiment) for query in queries]
-
-        # Execute in parallel
         results = compute(*tasks)
-
-        # print(json.dumps(results))
-        # save the classifications into csv and json files
+        #-----------------save the classifications into csv and json files--------------------
         classifier.saveToFile(sentiment=sentiment, comment_classification=results)
+        #---------------------------------------------------------
+
+        #---------------using dask bag-----------------------------
+        # text_bag = db.from_sequence(queries)
+        #
+        # classified_results = text_bag.map(
+        #     (classify_reviews)(review=str(query for query in queries), sentiment=sentiment)
+        # ).compute()
+        # print(classified_results)
+        #----------------------------------------------------------
+
+        #----------------close the client for parallel processing----------------
         client.close()
     end = time.time()
 
     print(f"time taken classifying reviews :", end - start)
-    # # #----------------------------------------------------------------
+

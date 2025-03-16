@@ -21,7 +21,7 @@ class RedditHandler:
         self.client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         self.client_useragent = os.getenv('REDDIT_USER_AGENT')
         self.client_searchqueries = queries
-        self.subreddits = ["GooglePixel", "Pixel"]
+        self.subreddits = ["GooglePixel","Pixel","Google","pixel_phones","Smartphones","Android","apple","applesucks","iphone"]
 
 # -----------------------------------------------------------------
 
@@ -65,9 +65,11 @@ class RedditHandler:
                         # query=self.client_searchqueries,
                         query=query,
                         time_filter=os.getenv('TIME_FILTER'),
-                        limit=int(os.getenv('NUM_POSTS'))
+                        limit=int(os.getenv('NUM_POSTS')),
+                        sort="relevance"
                     )
                     # print(len(posts))
+
                     for post in posts:
                         # print(f"📌 Found Post: {post.title} (Upvotes: {post.score})")
                         post.comments.replace_more(limit=2)  # Avoid excessive API calls

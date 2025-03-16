@@ -9,7 +9,7 @@ generator = pipeline(
             task="text-generation",
             model="google/gemma-2-9b-it",
             top_k=1,
-            device=-1,
+            device=1,
         )
 
 classifier = pipeline(
@@ -19,15 +19,16 @@ classifier = pipeline(
             temparature=0.1,
             max_length=512,
             truncation=True,
-            device=-1,
+            device=1,
         )
+classifier.model.to("cuda")
 
 summarizer = pipeline(
             task="summarization",
             model="facebook/bart-large-cnn",
             top_k=1,
 
-            device=-1,
+            device=1,
         )
 
 analyzer = SentimentIntensityAnalyzer()
@@ -82,8 +83,8 @@ class ProcessReview:
                 "content": summary_prompt
             },
         ]
-        summary = summarizer(messages)
-        return summary[0]["generated_text"][-1]["content"].strip()
+        summary = summarizer(review, max_length=130, min_length=30, do_sample=False)
+        return summary
 
 
     #----------------------------------------------------------------------------------------
@@ -151,11 +152,11 @@ class ProcessReview:
         print(f"assessing sentiments")
         posts['sentiment'] = posts['combined_reviews'].apply(self.analyze_sentiment)
 
-        print(f"classifying into categories")
-        posts['category'] = posts['combined_reviews'].apply(self.classify_review)
+        # print(f"classifying into categories")
+        # posts['category'] = posts['combined_reviews'].apply(self.classify_review)
 
-        # print(f"summarizing the reviews")
-        # posts['summary'] = posts['combined_reviews'].apply(self.summarize_review)
+        print(f"summarizing the reviews")
+        posts['summary'] = posts['combined_reviews'].apply(self.summarize_review)
 
         print(f"generating test cuj")
         posts['test_cuj'] = posts['combined_reviews'].apply(self.generate_testcuj)

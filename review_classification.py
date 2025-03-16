@@ -42,42 +42,29 @@ class ReviewClassifier:
         self.model = LLMModel()
         # self.client = self.model.getclientinterface()
         self.MODEL = os.getenv('INFERENCE_MODEL')
-        self.classifiers = {"Audio", "Voice Quality", "Bluetooth", "Wi-Fi", "Call drop", "Car Kit", "Other"}
-        # self.classifiers = {
-        #     "Audio Issues": ["audio", "sound"],
-        #     "Video Issues": ["video", "display"],
-        #     "User Experience": ["experience", "user"],
-        #     "Service": ["service", "support"],
-        #     "Support": ["support", "help"],
-        #     "Others": ["other"],
-        #     "Technical": ["technical", "tech"],
-        #     "Voice Quality": ["voice", "call quality"],
-        #     "Bluetooth": ["bluetooth"],
-        #     "WiFi": ["wifi", "wireless"],
-        #     "Call drop": ["call drop", "dropped call"]
-        # }
-        self.task = (f"You are an expert in assessing sentiment, classifying the review into a set of predefined labels"
-                     f"and summarizing the review into a crisp two sentences and generating step wise test user journey ")
-        self.output_criteria = (f"Return only category names from {self.classifiers} ensuring: "
-                                f"1. No new lines or extra white spaces. "
-                                f"2. No additional words, explanations, or qualifiers. "
-                                f"3. Map only to the relevant categories from the provided categories: {self.classifiers} ."
-                                f"4. Do not include all categories when no relevant mapping is detected.Use None")
+        self.classification_labels = ["Audio","Watch","Bluetooth", "Wi-Fi", "CarKit", "Other"]
+        self.classification_guidelines = (
+                f"Return only the labels provided in {self.classification_labels} "
+                f"** Strictly ensuring ** : "
+                f"1. No new lines or extra white spaces."
+                f"2. No additional words, explanations, or qualifiers."
+                f"3. When no relevant mapping to the provided labels is detected, use Other"
+            )
 
-        self.prompt = (
-                        f"Use only the categories from {self.classifiers}. "
-                        f"Strictly adhere to criteria in {self.output_criteria} for labeling "
-                        f"Output Format: "
-                        f"return the output in a structured JSON format as follows:\n"
-                        f"{{\n"
-                        f"    'sentiment': '',\n"
-                        f"    'category': '',\n"
-                        f"    'user_review': '',\n"
-                        f"    'summary': '',\n"
-                        f"    'test_user_journey': ''\n"
-                        f"}}"
-                        f"return only the sentiment, label for the category and do not append any other text to them"
-                     )
+        self.classification_task = (
+                f"You are an expert in choosing the most appropriate label for classifying a given text "
+                f"and do not deviate from the guidelines "
+            )
+        self.testCUJ_task = (
+                f"You are a senior, experienced software quality analyst and tester specializing "
+                f"in mobile phones and accessories. Generate clear and concise instructions to create a "
+                f"test user journey using language and descriptions that a tester can easily understand and follow"
+                f"that addresses the key issue described in the review"
+            )
+        self.summarization_task = (
+                f"You are an expert in text summarization. Summarize into two concise and impactful sentences"
+                f"the review"
+            )
 
     def classifyReviews(self, sentiment: str):
         """
@@ -114,20 +101,17 @@ class ReviewClassifier:
             # print("Classification started")
             classifier = client.generate(
                 model=self.MODEL,
-                prompt=f"Classify the {comment} adhering to guidelines in {self.prompt}"
+                prompt=(f"Perform the task in {self.classification_task} on {comment} adhering "
+                        f"to guidelines in {self.classification_guidelines}")
             )
             sentiment = sentiment
             summarizer = client.generate(
                 model=self.MODEL,
-                prompt=(f"You are an expert in summarization. Please condense the following {comment} into "
-                        f"two concise and impactful sentences.")
+                prompt=f"perform the task in {self.summarization_task} in {comment}"
             )
             testCUJ = client.generate(
                 model=self.MODEL,
-                prompt=(f"You are a senior, experienced software quality analyst and tester specializing "
-                        f"in mobile phones and accessories. Generate clear and concise instructions to create a "
-                        f"test user journey that addresses the key issue described in the following {comment}, "
-                        f"using language and descriptions that a tester can easily understand and follow")
+                prompt=f"perform the task in {self.testCUJ_task} in {comment}"
             )
             # print("Classification done")
             classifications.append({
@@ -162,57 +146,26 @@ class ReviewClassifier:
         # print("Classification started")
         classifier = client.generate(
             model=self.MODEL,
-            prompt=f"Classify the {comment} adhering to guidelines in {self.prompt}",
+            prompt=(f"Perform the task in {self.classification_task} on {comment} adhering "
+                    f"to guidelines in {self.classification_guidelines}"),
         )
         sentiment = sentiment
         # print("Classification done")
         summarizer = client.generate(
             model=self.MODEL,
-            prompt=(f"You are an expert in summarization. Please condense the following {comment} into "
-                    f"two concise and impactful sentences.")
+            prompt=f"perform the task in {self.summarization_task} in {comment}"
         )
         testCUJ = client.generate(
             model=self.MODEL,
-            prompt=(f"You are a senior, experienced software quality analyst and tester specializing "
-                    f"in mobile phones and accessories. Generate clear and concise instructions to create a "
-                    f"test user journey that addresses the key issue described in the following {comment},"
-                    f"using language and descriptions that a tester can easily understand and follow")
+            prompt=f"perform the task in {self.testCUJ_task} in {comment}"
         )
         classification = {
             "sentiment": sentiment,
-            "categories": [classifier.response],
+            "categories": classifier.response,
             "user_review": comment,
-            "summary": [summarizer.response],
-            "test_user_journey": [testCUJ.response]
+            "summary": summarizer.response,
+            "test_user_journey": testCUJ.response
         }
-        # print("Updates done")
+        print(f"Updates done for:\n {summarizer.response}")
         return classification
 
-    def processReview(self, comment: str, sentiment: str):
-        """
-        """
-        classification = {}
-        # print("Entering classification")
-        # for comment in comment_list:
-        model = LLMModel()
-        client = model.getclientinterface()
-        # print("Classification started")
-        generated_content = client.generate(
-            model=self.MODEL,
-            prompt=f"Perform the task detailed in {self.task} on {comment} adhering to guidelines in {self.prompt}",
-            format=Output.model_json_schema()
-        )
-        result = Output.model_validate_json(generated_content.response)
-        # print(result)
-        classification = {
-            "sentiment": result.sentiment,
-            "category": result.category,
-            "user_review": comment,
-            "summary": result.summary,
-            "test_user_journey": result.test_user_journey
-        }
-        # print(classification)
-        return classification
-        # print(result.sentiment, result.categories,result.summary, result.test_user_journey)
-        #
-        # return generated_content
