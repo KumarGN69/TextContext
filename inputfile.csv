@@ -1,60 +1,40 @@
-Critical User Journey Problem area,Component,Feature/ Functionality,3P apps,1P apps,3P device,1P Devices  Combination
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord","Carkit, Youtube, YT music, Gemini",,"Pixel 8, Pixel 9, Pixel Fold + Pixel EarBuds"
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord","Carkit, Youtube, YT music, Gemini",,"Pixel 8, Pixel 9, Pixel Fold + Pixel Buds Pro 2"
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming","Carkit, Youtube, YT music, Gemini",,Pixel Tablet + Pixel Buds A series
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord","Carkit, Youtube, YT music, Gemini",,Pixel Tablet + Pixel Buds Pro 2
-Connection drops," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA",,"Carkit, Youtube, YT music, Gemini",,Pixel Phones + Pixel Buds + Pixel Watch
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord","Carkit, Youtube, YT music, Gemini",Windows Laptop + Pixel Buds Pro 2,
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord","Carkit, Youtube, YT music, Gemini",MacBook + Pixel Buds Pro 2,
-"Crackling sound, audio not playing, connection establishment,media streaming"," Audio, Streaming, Media, Bluetooth, WiFi","Audio, Connectivity,  Spatial Audio,  OOBE, OTA","Whatsapp call, Disney+, Netflix, Gaming, Discord",,,ChromeOS + Pixel Buds 2 Pro
-Bluetooth Reconnection Failure ,Bluetooth Stack,Automatic Reconnection,-,"YT, YTM"," Carkit
-
-","Pixel 7 
+Critical User Journey Problem area,Component,1P Devices  Combination
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 8, Pixel 9, Pixel Fold + Pixel EarBuds"
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 8, Pixel 9, Pixel Fold + Pixel Buds Pro 2"
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",Pixel Tablet + Pixel Buds A series
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",Pixel Tablet + Pixel Buds Pro 2
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",Pixel Phones + Pixel Buds + Pixel Watch
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",
+"Audio , Streaming , Call quality"," Bluetooth, WiFi",ChromeOS + Pixel Buds 2 Pro
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 7 
 Pixel 8
 Pixel 8 Pro XL
 Pixel Earbuds"
-Google Assistant voice is cut off/not heard,Audio Routing,Call routing,-,"YT, YTM, GSA, Gemini"," Carkit
-
-","Pixel 7 
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 7 
 Pixel 9 pro
 Pixel Fold
 Pixel Earbuds"
-Call audio routing,"Car Kit, Bluetooth","Call Routing, Automatice reconnection",-,"YT, YTM"," Carkit
-
-","Pixel 8A
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 8A
 Pixel Earbuds"
-Data does not sync,"Car Kit, Bluetooth",Data Sync,-,"YT, YTM"," Carkit
-
-","Pixel 9
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 9
 Pixel 8
 Pixel 8A
 Pixel Earbuds"
-Message updates not happening,Messages,Message Sync,-,-," Carkit
-
-","Pixel 8
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 8
 Pixel 9
 Pixel Earbuds"
-Conference calling does not work,"Calling, Bluetooth","Calling, conference calls",-,"YT, YTM"," Carkit
-
-","Pixel 8
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 8
 Pixel Earbuds"
-Music player changes stops app from working,"Media, Bluetooth",Data Sync,,"YT, YTM"," Carkit
-
-","Pixel 9 Fold 2
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 9 Fold 2
 Pixel Earbuds"
-Audio is not heard via car kit,"Car Kit, Bluetooth","Call Routing, Automatice reconnection",-,"YT, YTM"," Carkit
-
-","Pixel 9 Pro XL
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 9 Pro XL
 Pixel Earbuds"
-Google Meet/whatsapp call shows own number instead of recipient's number ,"Car Kit, Bluetooth",Automatic Reconnection,Whatsapp,Car Kit," Carkit
-
-","Pixel 9 pro
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 9 pro
 Pixel 7 Pro
 Pixel Fold
 Pixel Earbuds"
-Query/calls made via google assistant route to the caller,"Calling, Bluetooth",Calling , ,"YT, YTM, GSA, Gemini"," Carkit
-
-","Pixel 7A
+"Audio , Streaming , Call quality"," Bluetooth, WiFi","Pixel 7A
 Pixel 9
 Pixel 8
 Pixel Earbuds"

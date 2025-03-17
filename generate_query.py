@@ -30,8 +30,7 @@ class GenerateSearchQueries:
                 f"1. **Device Combinations** (from {df['1P Devices  Combination']})"
                 f"2. **Core User Pain Points** (from {df['Critical User Journey Problem area']}, REQUIRED)"
                 f"3. **Hardware/Software Components** (from {df['Component']})"
-                f"4. **Key Features** (from {df['Feature/ Functionality']})"
-                f"5. **Comparison with similar competition products (from Apple"
+                f"5. **Comparison with similar competition products (from Apple)"
 
                 f"**Requirements:**"
                 f"- Mandatory inclusion of Critical User Journey Problem area"

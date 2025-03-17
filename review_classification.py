@@ -44,7 +44,7 @@ class ReviewClassifier:
         self.MODEL = os.getenv('INFERENCE_MODEL')
         self.classification_labels = ["Audio","Watch","Bluetooth", "Wi-Fi", "CarKit", "Other"]
         self.classification_guidelines = (
-                f"Return only the labels provided in {self.classification_labels} "
+                f"Categorize the review into exactly one of labels in {self.classification_labels} "
                 f"** Strictly ensuring ** : "
                 f"1. No new lines or extra white spaces."
                 f"2. No additional words, explanations, or qualifiers."
