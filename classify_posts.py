@@ -5,30 +5,30 @@ from transformers import pipeline
 
 #----------------------------------------------------------------------------------------
 # instantiate a text generator, classifier , summarizer and sentiment analyzer
-generator = pipeline(
-            task="text-generation",
-            model="google/gemma-2-9b-it",
-            top_k=1,
-            device=1,
-        )
+# generator = pipeline(
+#             task="text-generation",
+#             model="google/gemma-2-9b-it",
+#             top_k=1,
+#             device=1,
+#         )
 
-classifier = pipeline(
-            task="zero-shot-classification",
-            model="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
-            top_k=1,
-            temparature=0.1,
-            max_length=512,
-            truncation=True,
-            device=1,
-        )
-classifier.model.to("cuda")
+# classifier = pipeline(
+#             task="zero-shot-classification",
+#             model="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+#             top_k=1,
+#             temparature=0.1,
+#             max_length=512,
+#             truncation=True,
+#             device=1,
+#         )
+# classifier.model.to("cuda")
 
 summarizer = pipeline(
             task="summarization",
             model="facebook/bart-large-cnn",
             top_k=1,
 
-            device=1,
+            device=-1,
         )
 
 analyzer = SentimentIntensityAnalyzer()
@@ -45,22 +45,22 @@ class ProcessReview:
     #----------------------------------------------------------------------------------------
     # define methods for classification, sentiment analysis, summarization and test cuj generation
 
-    def classify_review(self, review:str):
-        """
-        classifies the reviews into categories based on the labels
-        :param
-            review: user_review
-            labels: list of labels
-        :return: classification of the user review
-        """
-        # labels for classification
-        labels = ["Audio", "Voice", "Call drop", "Car Kit", "Bluetooth", "Wifi", "Other"]
-
-        classify_prompt = f"classify the review strictly into the label which has the max score"
-        classification = classifier(review, prompt= classify_prompt, candidate_labels=labels, multi_label=False)
-        category = classification['labels']
-        max_score_index = classification['scores'].index(max(classification['scores']))
-        return category[max_score_index]
+    # def classify_review(self, review:str):
+    #     """
+    #     classifies the reviews into categories based on the labels
+    #     :param
+    #         review: user_review
+    #         labels: list of labels
+    #     :return: classification of the user review
+    #     """
+    #     # labels for classification
+    #     labels = ["Audio", "Voice", "Call drop", "Car Kit", "Bluetooth", "Wifi", "Other"]
+    #
+    #     classify_prompt = f"classify the review strictly into the label which has the max score"
+    #     classification = classifier(review, prompt= classify_prompt, candidate_labels=labels, multi_label=False)
+    #     category = classification['labels']
+    #     max_score_index = classification['scores'].index(max(classification['scores']))
+    #     return category[max_score_index]
 
 
     #----------------------------------------------------------------------------------------
@@ -90,25 +90,25 @@ class ProcessReview:
     #----------------------------------------------------------------------------------------
 
     #----------------------------------------------------------------------------------------
-    def generate_testcuj(self,review:str):
-        """
-        classifies the reviews into categories based on the labels
-        :param
-            review: user_review
-            labels: list of labels
-        :return: classification of the user review
-        """
-
-        testcuj_prompt = (f"Generate a detailed test user journey based on contents in the  {review}"
-                          f"in concise langaue that is easy for tester to follow and implement")
-        messages = [
-            {
-                "role": "user",
-                "content": testcuj_prompt
-            },
-        ]
-        testcuj = generator(messages)
-        return testcuj[0]["generated_text"][-1]["content"].strip()
+    # def generate_testcuj(self,review:str):
+    #     """
+    #     classifies the reviews into categories based on the labels
+    #     :param
+    #         review: user_review
+    #         labels: list of labels
+    #     :return: classification of the user review
+    #     """
+    #
+    #     testcuj_prompt = (f"Generate a detailed test user journey based on contents in the  {review}"
+    #                       f"in concise langaue that is easy for tester to follow and implement")
+    #     messages = [
+    #         {
+    #             "role": "user",
+    #             "content": testcuj_prompt
+    #         },
+    #     ]
+    #     testcuj = generator(messages)
+    #     return testcuj[0]["generated_text"][-1]["content"].strip()
 
 
     #----------------------------------------------------------------------------------------
@@ -158,8 +158,8 @@ class ProcessReview:
         print(f"summarizing the reviews")
         posts['summary'] = posts['combined_reviews'].apply(self.summarize_review)
 
-        print(f"generating test cuj")
-        posts['test_cuj'] = posts['combined_reviews'].apply(self.generate_testcuj)
+        # print(f"generating test cuj")
+        # posts['test_cuj'] = posts['combined_reviews'].apply(self.generate_testcuj)
 
         # print(posts['sentiment'],posts['category'],posts['combined_reviews'])
         print(posts.columns)

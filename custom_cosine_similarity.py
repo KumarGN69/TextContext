@@ -7,17 +7,17 @@ model = LLMModel()
 client = model.getclientinterface()
 
 content1 = client.generate(
-    model="llama3.2",
+    model="mistral:latest",
     prompt="Who is the current president of United states of America"
 )
 logger.info(content1.response)
 content2 = client.generate(
-    model="llama3.2",
+    model="mistral:latest",
     prompt="Who is the current president of United states of America"
 )
 logger.info(content2.response)
-# transformer_model = SentenceTransformer("deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B")
-# transformer_model.save("./deepseekZero")
+transformer_model = SentenceTransformer("deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B")
+transformer_model.save("./deepseekZero")
 transformer_local_model = SentenceTransformer("./deepseekZero")
 
 content1_emb = transformer_local_model.encode(content1.response, convert_to_tensor=True)

@@ -11,9 +11,10 @@ from reddit_handler import RedditHandler
 from sentiment_analyzer import SentimentAnalyzer
 from review_classification import ReviewClassifier
 from generate_query import GenerateSearchQueries
+from category_classifier import CategoryClassifier
 
 #------configuration to force dask scheduler to use full parallel processing -----------------
-dask.config.set({"distributed.scheduler.worker-ttl":None})
+dask.config.set({"distributed.scheduler.worker-ttl": None})
 num_workers = multiprocessing.cpu_count()
 print(num_workers)
 #create a classifier instance
@@ -28,11 +29,11 @@ def classify_reviews(review: str, sentiment: str):
 if __name__ == "__main__":
     dotenv.load_dotenv()
     # -----------------generate search queries----------------------------------------------
-    start = time.time()
-    query_generator = GenerateSearchQueries()
-    query_generator.generateQueries()
-    end = time.time()
-    print(f"time taken for generating queries", end - start)
+    # start = time.time()
+    # query_generator = GenerateSearchQueries()
+    # query_generator.generateQueries()
+    # end = time.time()
+    # print(f"time taken for generating queries", end - start)
     # ----------------------------------------------------------------
 
     # # ----------------fetch reddit posts------------------------------------------------
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     # multiprocessing.freeze_support()
     # # start the classification process
     # start = time.time()
-    # for sentiment in ["neutral"]:
+    # for sentiment in ["positive","neutral","negative"]:
     #     #--------------read the sentiment files-------------------
     #     df = pd.read_csv(f"./reddit_{sentiment}_reviews.csv")
     #     df = df.astype(str)
@@ -84,20 +85,18 @@ if __name__ == "__main__":
     #     results = compute(*tasks)
     #     #-----------------save the classifications into csv and json files--------------------
     #     classifier.saveToFile(sentiment=sentiment, comment_classification=results)
-    #     #---------------------------------------------------------
+    # #---------------------------------------------------------
     #
-    #     #---------------using dask bag-----------------------------
-    #     # text_bag = db.from_sequence(queries)
-    #     #
-    #     # classified_results = text_bag.map(
-    #     #     (classify_reviews)(review=str(query for query in queries), sentiment=sentiment)
-    #     # ).compute()
-    #     # print(classified_results)
-    #     #----------------------------------------------------------
-    #
-    #     #----------------close the client for parallel processing----------------
     #     client.close()
     # end = time.time()
     #
     # print(f"time taken classifying reviews :", end - start)
 
+    # ---------------categorizing themes -------------------------------------------------
+    start = time.time()
+    print(f"Starting theme mapping")
+    theme_categorizer = CategoryClassifier()
+    for item in ["negative"]:
+        theme_categorizer.generate_theme_mappings(sentiment=item)
+    end = time.time()
+    print(f"time taken for theme categorization", end - start)

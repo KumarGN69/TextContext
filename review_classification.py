@@ -62,8 +62,12 @@ class ReviewClassifier:
                 f"that addresses the key issue described in the review"
             )
         self.summarization_task = (
-                f"You are an expert in text summarization. Summarize into two concise and impactful sentences"
-                f"the review"
+            f"You are a world-class expert in text summarization, with a keen ability to distill "
+            f"complex information into its most essential elements. Your task is to analyze the "
+            f"given review and create a summary that captures its core message and most significant "
+            f"points in exactly two concise, meaningful, and well-crafted sentences. "
+            f"Ensure that your summary is both comprehensive and succinct, leaving no crucial information "
+            f"out while avoiding unnecessary details."
             )
 
     def classifyReviews(self, sentiment: str):
@@ -144,27 +148,27 @@ class ReviewClassifier:
         model = LLMModel()
         client = model.getclientinterface()
         # print("Classification started")
-        classifier = client.generate(
-            model=self.MODEL,
-            prompt=(f"Perform the task in {self.classification_task} on {comment} adhering "
-                    f"to guidelines in {self.classification_guidelines}"),
-        )
+        # classifier = client.generate(
+        #     model=self.MODEL,
+        #     prompt=(f"Perform the task in {self.classification_task} on {comment} adhering "
+        #             f"to guidelines in {self.classification_guidelines}"),
+        # )
         sentiment = sentiment
         # print("Classification done")
         summarizer = client.generate(
             model=self.MODEL,
             prompt=f"perform the task in {self.summarization_task} in {comment}"
         )
-        testCUJ = client.generate(
-            model=self.MODEL,
-            prompt=f"perform the task in {self.testCUJ_task} in {comment}"
-        )
+        # testCUJ = client.generate(
+        #     model=self.MODEL,
+        #     prompt=f"perform the task in {self.testCUJ_task} in {comment}"
+        # )
         classification = {
             "sentiment": sentiment,
-            "categories": classifier.response,
+            # "categories": classifier.response,
             "user_review": comment,
             "summary": summarizer.response,
-            "test_user_journey": testCUJ.response
+            # "test_user_journey": testCUJ.response
         }
         print(f"Updates done for:\n {summarizer.response}")
         return classification

@@ -63,10 +63,11 @@ class RedditHandler:
                     subreddit_instance = reddit.subreddit(subreddit)
                     posts = subreddit_instance.search(
                         # query=self.client_searchqueries,
-                        query=query,
+                        query=f"self_text:{query}",
                         time_filter=os.getenv('TIME_FILTER'),
                         limit=int(os.getenv('NUM_POSTS')),
-                        sort="relevance"
+                        sort="relevance",
+                        syntax="lucene"
                     )
                     # print(len(posts))
 
